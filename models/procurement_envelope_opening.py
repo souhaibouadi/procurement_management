@@ -19,7 +19,7 @@ class ProcurementEnvelopeOpening(models.Model):
         ('opened', 'Opened'),
         ('validated', 'Validated'),
     ], string="Status", default='draft')
-        name = fields.Char(string="Opening Name", required=True)
+            name = fields.Char(string="Opening Name", required=True)
     session_id = fields.Many2one('procurement.committee.session', string="Session")
     envelope_type = fields.Selection([
         ('candidacy', 'Candidacy'),
