@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <!-- Background -->
-  <rect width="128" height="128" rx="16" fill="#714B67"/>
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#875A7B"/>
+      <stop offset="100%" style="stop-color:#5F3E52"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="20" fill="url(#bgGrad)"/>
   
-  <!-- Document -->
-  <rect x="28" y="20" width="50" height="65" rx="4" fill="white"/>
-  <rect x="28" y="20" width="50" height="15" rx="4" fill="#875A7B"/>
+  <!-- Clipboard base -->
+  <rect x="30" y="25" width="68" height="85" rx="6" fill="#FFFFFF"/>
+  <rect x="30" y="25" width="68" height="85" rx="6" fill="none" stroke="#E0D4DC" stroke-width="2"/>
+  
+  <!-- Clipboard clip -->
+  <rect x="48" y="18" width="32" height="14" rx="4" fill="#D4A373"/>
+  <rect x="54" y="22" width="20" height="6" rx="2" fill="#FFFFFF"/>
   
   <!-- Document lines -->
-  <rect x="35" y="45" width="35" height="4" rx="2" fill="#E0E0E0"/>
-  <rect x="35" y="55" width="30" height="4" rx="2" fill="#E0E0E0"/>
-  <rect x="35" y="65" width="25" height="4" rx="2" fill="#E0E0E0"/>
-  <rect x="35" y="75" width="20" height="4" rx="2" fill="#E0E0E0"/>
+  <rect x="40" y="42" width="40" height="5" rx="2" fill="#E8E0E5"/>
+  <rect x="40" y="52" width="48" height="5" rx="2" fill="#E8E0E5"/>
+  <rect x="40" y="62" width="35" height="5" rx="2" fill="#E8E0E5"/>
   
-  <!-- Checkmark -->
-  <circle cx="53" cy="27" r="5" fill="white"/>
-  <path d="M50 27 L52 29 L56 25" stroke="#714B67" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Checkmarks for completed items -->
+  <circle cx="50" y="75" cy="80" r="8" fill="#4CAF50"/>
+  <path d="M46 80 L49 83 L55 76" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
   
-  <!-- Gavel -->
-  <rect x="75" y="55" width="30" height="12" rx="3" fill="#F5F5F5" transform="rotate(-45 90 61)"/>
-  <rect x="88" y="75" width="8" height="25" rx="2" fill="#D4A373"/>
-  <ellipse cx="92" cy="102" rx="12" ry="5" fill="#8B6914"/>
+  <!-- Price tag / bid symbol -->
+  <circle cx="78" cy="82" r="12" fill="#F9A825"/>
+  <text x="78" y="87" font-family="Arial" font-size="12" font-weight="bold" fill="white" text-anchor="middle">DA</text>
   
-  <!-- DZD Symbol -->
-  <text x="95" y="45" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#F5F5F5">DZD</text>
+  <!-- Tender/auction hammer icon (small) -->
+  <rect x="85" y="40" width="18" height="8" rx="2" fill="#8D6E63" transform="rotate(-30 94 44)"/>
+  <rect x="92" y="46" width="5" height="14" rx="1" fill="#6D4C41"/>
 </svg>
