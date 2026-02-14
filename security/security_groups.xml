@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="module_category_procurement" model="ir.module.category">
+            <field name="name">Procurement Management</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="group_procurement_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_category_procurement"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_procurement_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_procurement"/>
+            <field name="implied_ids" eval="[(4, ref('group_procurement_user'))]"/>
+        </record>
+
+        <record id="group_procurement_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="module_category_procurement"/>
+            <field name="implied_ids" eval="[(4, ref('group_procurement_manager'))]"/>
+        </record>
+
+        <record id="group_committee_member" model="res.groups">
+            <field name="name">Committee Member</field>
+            <field name="category_id" ref="module_category_procurement"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+    </data>
+</odoo>
