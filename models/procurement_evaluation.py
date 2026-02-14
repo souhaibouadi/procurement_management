@@ -18,6 +18,22 @@ class ProcurementEvaluation(models.Model):
     minutes_id = fields.Many2one('procurement.minutes', string="Minutes")
     evaluation_date = fields.Date(string="Evaluation Date")
     notes = fields.Text(string="Notes")
+        name = fields.Char(string="Evaluation Name", required=True)
+    bidder_id = fields.Many2one('procurement.bidder', string="Bidder")
+    technical_score = fields.Float(string="Technical Score")
+    financial_score = fields.Float(string="Financial Score")
+    total_score = fields.Float(string="Total Score")
+    rank = fields.Integer(string="Rank")
+    technical_notes = fields.Text(string="Technical Notes")
+    financial_notes = fields.Text(string="Financial Notes")
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('validated', 'Validated'),
+    ], string="State", default='draft')
+
+    def action_validate(self):
+        """Validate the evaluation"""
+        self.write({'state': 'validated'})
 
 
 class ProcurementEvaluationCriterion(models.Model):
