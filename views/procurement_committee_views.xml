@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Committee Form View -->
+    <record id="view_procurement_committee_form" model="ir.ui.view">
+        <field name="name">procurement.committee.form</field>
+        <field name="model">procurement.committee</field>
+        <field name="arch" type="xml">
+            <form string="Committee">
+                <sheet>
+                    <group>
+                        <group string="Committee Information">
+                            <field name="name"/>
+                            <field name="committee_type"/>
+                            <field name="procedure_id"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Appointment">
+                            <field name="appointment_decision_ref"/>
+                            <field name="appointment_date"/>
+                        </group>
+                    </group>
+                    <group string="Committee Members">
+                        <group>
+                            <field name="president_id"/>
+                            <field name="vice_president_id"/>
+                        </group>
+                        <group>
+                            <field name="secretary_id"/>
+                            <field name="reporter_id"/>
+                        </group>
+                    </group>
+                    <separator string="Additional Members"/>
+                    <field name="member_ids" widget="many2many_tags"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Committee Tree View -->
+    <record id="view_procurement_committee_tree" model="ir.ui.view">
+        <field name="name">procurement.committee.tree</field>
+        <field name="model">procurement.committee</field>
+        <field name="arch" type="xml">
+            <tree string="Committees">
+                <field name="name"/>
+                <field name="committee_type"/>
+                <field name="procedure_id"/>
+                <field name="president_id"/>
+                <field name="appointment_date"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Committee Search View -->
+    <record id="view_procurement_committee_search" model="ir.ui.view">
+        <field name="name">procurement.committee.search</field>
+        <field name="model">procurement.committee</field>
+        <field name="arch" type="xml">
+            <search string="Search Committees">
+                <field name="name"/>
+                <field name="committee_type"/>
+                <field name="procedure_id"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Type" name="group_type" context="{'group_by': 'committee_type'}"/>
+                    <filter string="Procedure" name="group_procedure" context="{'group_by': 'procedure_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Committee Action -->
+    <record id="action_procurement_committee" model="ir.actions.act_window">
+        <field name="name">Committees</field>
+        <field name="res_model">procurement.committee</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_procurement_committee_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new committee</p>
+        </field>
+    </record>
+
+</odoo>
