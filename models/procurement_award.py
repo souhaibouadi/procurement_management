@@ -31,6 +31,7 @@ class ProcurementAward(models.Model):
         ('confirmed', 'Confirmed'),
         ('cancelled', 'Cancelled'),
     ], string="Status", default='draft')
+        company_id = fields.Many2one('res.company', string="Company", default=lambda self: self.env.company)
 
     @api.depends('appeal_start_date')
     def _compute_appeal_end_date(self):
