@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Procurement Document Form View -->
+    <record id="view_procurement_document_form" model="ir.ui.view">
+        <field name="name">procurement.document.form</field>
+        <field name="model">procurement.document</field>
+        <field name="arch" type="xml">
+            <form string="Procurement Document">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Document Name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="procedure_id" options="{'no_create': True}"/>
+                            <field name="document_type" required="1"/>
+                            <field name="document_number"/>
+                            <field name="date" required="1"/>
+                        </group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="is_required"/>
+                            <field name="is_received"/>
+                            <field name="received_date" attrs="{'invisible': [('is_received', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Document" name="document">
+                            <group>
+                                <field name="attachment_ids" widget="many2many_binary" string="Files"/>
+                            </group>
+                            <field name="description" placeholder="Document description..."/>
+                        </page>
+                        <page string="Verification" name="verification">
+                            <group>
+                                <group>
+                                    <field name="verified_by" options="{'no_create': True}"/>
+                                    <field name="verification_date"/>
+                                </group>
+                                <group>
+                                    <field name="is_valid"/>
+                                    <field name="expiry_date"/>
+                                </group>
+                            </group>
+                            <field name="verification_notes" placeholder="Verification notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Procurement Document Tree View -->
+    <record id="view_procurement_document_tree" model="ir.ui.view">
+        <field name="name">procurement.document.tree</field>
+        <field name="model">procurement.document</field>
+        <field name="arch" type="xml">
+            <tree string="Procurement Documents" decoration-success="is_valid==True" decoration-warning="is_valid==False and is_received==True" decoration-muted="is_received==False">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="document_type"/>
+                <field name="document_number"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="is_required"/>
+                <field name="is_received"/>
+                <field name="is_valid"/>
+                <field name="expiry_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Procurement Document Kanban View -->
+    <record id="view_procurement_document_kanban" model="ir.ui.view">
+        <field name="name">procurement.document.kanban</field>
+        <field name="model">procurement.document</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="document_type"/>
+                <field name="is_received"/>
+                <field name="is_valid"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                                <field name="document_type"/>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <field name="date"/>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <field name="is_valid" widget="boolean_toggle"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Procurement Document Search View -->
+    <record id="view_procurement_document_search" model="ir.ui.view">
+        <field name="name">procurement.document.search</field>
+        <field name="model">procurement.document</field>
+        <field name="arch" type="xml">
+            <search string="Search Documents">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="partner_id"/>
+                <field name="document_number"/>
+                <separator/>
+                <filter name="filter_required" string="Required" domain="[('is_required', '=', True)]"/>
+                <filter name="filter_received" string="Received" domain="[('is_received', '=', True)]"/>
+                <filter name="filter_pending" string="Pending" domain="[('is_received', '=', False)]"/>
+                <separator/>
+                <filter name="filter_valid" string="Valid" domain="[('is_valid', '=', True)]"/>
+                <filter name="filter_invalid" string="Invalid" domain="[('is_valid', '=', False)]"/>
+                <filter name="filter_expired" string="Expired" domain="[('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_procedure" string="Procedure" context="{'group_by': 'procedure_id'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'document_type'}"/>
+                    <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_date" string="Date" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Procurement Document Action -->
+    <record id="action_procurement_document" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">procurement.document</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="view_procurement_document_search"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Upload a new procurement document
+            </p>
+            <p>
+                Manage all documents related to procurement procedures.
+            </p>
+        </field>
+    </record>
+</odoo>
