@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Procurement Procedure Report Template -->
+    <template id="report_procurement_procedure">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Procurement Procedure</h2>
+                        <h3 class="text-center" t-field="o.name"/>
+                        
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Reference:</strong> <span t-field="o.reference"/><br/>
+                                <strong>Type:</strong> <span t-field="o.procedure_type"/><br/>
+                                <strong>Mode:</strong> <span t-field="o.procedure_mode"/><br/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Start Date:</strong> <span t-field="o.start_date"/><br/>
+                                <strong>End Date:</strong> <span t-field="o.end_date"/><br/>
+                                <strong>State:</strong> <span t-field="o.state"/><br/>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">Description</h4>
+                        <p t-field="o.description"/>
+                        
+                        <h4 class="mt-4">Budget Information</h4>
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Estimated Amount:</strong></td>
+                                <td t-field="o.estimated_amount" t-options="{'widget': 'monetary'}"/>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Procurement Notice Report Template -->
+    <template id="report_procurement_notice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">PROCUREMENT NOTICE</h2>
+                        <h3 class="text-center" t-field="o.name"/>
+                        
+                        <div class="mt-4">
+                            <strong>Notice Type:</strong> <span t-field="o.notice_type"/><br/>
+                            <strong>Publication Date:</strong> <span t-field="o.publication_date"/><br/>
+                            <strong>Deadline:</strong> <span t-field="o.deadline_date"/><br/>
+                        </div>
+                        
+                        <h4 class="mt-4">Notice Content</h4>
+                        <div t-field="o.content"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Session Minutes Report Template -->
+    <template id="report_session_minutes">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">SESSION MINUTES</h2>
+                        <h3 class="text-center" t-field="o.name"/>
+                        
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Session:</strong> <span t-field="o.session_id.name"/><br/>
+                                <strong>Date:</strong> <span t-field="o.date"/><br/>
+                                <strong>Type:</strong> <span t-field="o.minutes_type"/><br/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Start Time:</strong> <span t-field="o.start_time"/><br/>
+                                <strong>End Time:</strong> <span t-field="o.end_time"/><br/>
+                                <strong>Location:</strong> <span t-field="o.location"/><br/>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">Discussion Summary</h4>
+                        <div t-field="o.discussion_summary"/>
+                        
+                        <h4 class="mt-4">Notes</h4>
+                        <div t-field="o.notes"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Award Decision Report Template -->
+    <template id="report_award_decision">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">AWARD DECISION</h2>
+                        <h3 class="text-center" t-field="o.name"/>
+                        
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Procedure:</strong> <span t-field="o.procedure_id.name"/><br/>
+                                <strong>Award Date:</strong> <span t-field="o.award_date"/><br/>
+                                <strong>Decision Type:</strong> <span t-field="o.decision_type"/><br/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Winner:</strong> <span t-field="o.winner_id.name"/><br/>
+                                <strong>Award Amount:</strong> <span t-field="o.award_amount" t-options="{'widget': 'monetary'}"/><br/>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">Decision Justification</h4>
+                        <div t-field="o.justification"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Order Letter Report Template -->
+    <template id="report_order_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">ORDER LETTER</h2>
+                        <h3 class="text-center" t-field="o.name"/>
+                        
+                        <div class="mt-4">
+                            <strong>To:</strong> <span t-field="o.partner_id.name"/><br/>
+                            <strong>Date:</strong> <span t-field="o.letter_date"/><br/>
+                            <strong>Subject:</strong> <span t-field="o.subject"/><br/>
+                        </div>
+                        
+                        <div class="mt-4" t-field="o.body"/>
+                        
+                        <h4 class="mt-4">Conditions</h4>
+                        <p><strong>Delivery Deadline:</strong> <span t-field="o.delivery_deadline"/></p>
+                        <p><strong>Delivery Location:</strong> <span t-field="o.delivery_location"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Summons Report Template -->
+    <template id="report_summons">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">SUMMONS</h2>
+                        <h3 class="text-center" t-field="o.name"/>
+                        
+                        <div class="mt-4">
+                            <strong>To:</strong> <span t-field="o.member_id.partner_id.name"/><br/>
+                            <strong>Session:</strong> <span t-field="o.session_id.name"/><br/>
+                            <strong>Date:</strong> <span t-field="o.summons_date"/><br/>
+                        </div>
+                        
+                        <p class="mt-4">You are hereby summoned to attend the procurement session.</p>
+                        
+                        <div t-if="o.notes" class="mt-4">
+                            <h4>Additional Notes</h4>
+                            <div t-field="o.notes"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Evaluation Report Template -->
+    <template id="report_evaluation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">EVALUATION REPORT</h2>
+                        <h3 class="text-center" t-field="o.name"/>
+                        
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Procedure:</strong> <span t-field="o.procedure_id.name"/><br/>
+                                <strong>Evaluation Type:</strong> <span t-field="o.evaluation_type"/><br/>
+                                <strong>Date:</strong> <span t-field="o.evaluation_date"/><br/>
+                            </div>
+                            <div class="col-6">
+                                <strong>State:</strong> <span t-field="o.state"/><br/>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">Evaluation Summary</h4>
+                        <div t-field="o.summary"/>
+                        
+                        <h4 class="mt-4">Recommendations</h4>
+                        <div t-field="o.recommendations"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
