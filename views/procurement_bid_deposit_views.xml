@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_procurement_bid_deposit_form" model="ir.ui.view">
+        <field name="name">procurement.bid.deposit.form</field>
+        <field name="model">procurement.bid.deposit</field>
+        <field name="arch" type="xml">
+            <form string="Bid Deposit">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="procedure_id"/>
+                            <field name="bidder_id"/>
+                            <field name="deposit_date"/>
+                            <field name="deposit_time"/>
+                        </group>
+                        <group>
+                            <field name="receipt_number"/>
+                            <field name="envelope_count"/>
+                            <field name="depositor_name"/>
+                            <field name="depositor_function"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_procurement_bid_deposit_tree" model="ir.ui.view">
+        <field name="name">procurement.bid.deposit.tree</field>
+        <field name="model">procurement.bid.deposit</field>
+        <field name="arch" type="xml">
+            <tree string="Bid Deposits">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="bidder_id"/>
+                <field name="deposit_date"/>
+                <field name="receipt_number"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_procurement_bid_deposit" model="ir.actions.act_window">
+        <field name="name">Bid Deposits</field>
+        <field name="res_model">procurement.bid.deposit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
