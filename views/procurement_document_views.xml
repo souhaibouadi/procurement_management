@@ -23,7 +23,7 @@
                             <field name="partner_id" options="{'no_create': True}"/>
                             <field name="is_required"/>
                             <field name="is_received"/>
-                            <field name="received_date" attrs="{'invisible': [('is_received', '=', False)]}"/>
+                            <field name="received_date" invisible="not is_received"/>
                         </group>
                     </group>
                     <notebook>
