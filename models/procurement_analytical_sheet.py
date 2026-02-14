@@ -6,6 +6,8 @@ class ProcurementAnalyticalSheet(models.Model):
     _name = 'procurement.analytical.sheet'
     _description = 'Analytical Sheet for Award'
 
+    name = fields.Char(string="Reference", required=True, copy=False, readonly=True, default='New')
+
     procedure_id = fields.Many2one('procurement.procedure', string="Procedure")
     committee_session_ref = fields.Char(string="Market Committee Session No.", help="e.g. Committee n06/2025")
     session_date = fields.Date(string="Session Date")
