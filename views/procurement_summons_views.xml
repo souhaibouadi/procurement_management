@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Summons Form View -->
+    <record id="view_procurement_summons_form" model="ir.ui.view">
+        <field name="name">procurement.summons.form</field>
+        <field name="model">procurement.summons</field>
+        <field name="arch" type="xml">
+            <form string="Summons">
+                <header>
+                    <button name="action_send" string="Send" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_confirm_receipt" string="Confirm Receipt" type="object" class="btn-success" invisible="state != 'sent'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,received"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="session_id"/>
+                            <field name="procedure_id"/>
+                        </group>
+                        <group>
+                            <field name="member_id"/>
+                            <field name="sent_date"/>
+                            <field name="received_date"/>
+                        </group>
+                    </group>
+                    <group string="Content">
+                        <field name="content" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Summons Tree View -->
+    <record id="view_procurement_summons_tree" model="ir.ui.view">
+        <field name="name">procurement.summons.tree</field>
+        <field name="model">procurement.summons</field>
+        <field name="arch" type="xml">
+            <tree string="Summons">
+                <field name="name"/>
+                <field name="session_id"/>
+                <field name="member_id"/>
+                <field name="sent_date"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Summons Action -->
+    <record id="action_procurement_summons" model="ir.actions.act_window">
+        <field name="name">Summons</field>
+        <field name="res_model">procurement.summons</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new summons</p>
+        </field>
+    </record>
+
+</odoo>
