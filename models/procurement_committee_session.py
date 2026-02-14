@@ -11,6 +11,7 @@ class ProcurementCommitteeSession(models.Model):
     committee_id = fields.Many2one('procurement.committee', string="Committee")
     session_date = fields.Datetime(string="Session Date & Time", required=True)
     location = fields.Char(string="Meeting Location")
+    session_type = fields.Selection([('envelope_opening', 'Envelope Opening'), ('evaluation', 'Evaluation'), ('award', 'Award'), ('other', 'Other')], string="Session Type")
     agenda_item_ids = fields.One2many('procurement.session.agenda', 'session_id', string="Agenda Items")
     summons_ids = fields.One2many('procurement.summons', 'session_id', string="Summons")
     minutes_id = fields.Many2one('procurement.minutes', string="Session Minutes")
