@@ -40,7 +40,7 @@
                             <field name="summons_ids">
                                 <tree>
                                     <field name="member_id"/>
-                                    <field name="sent_date"/>
+                                    <field name="send_date"/>
                                     <field name="state"/>
                                 </tree>
                             </field>
