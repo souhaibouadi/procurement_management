@@ -8,7 +8,7 @@ class ProcurementBidder(models.Model):
 
     procedure_id = fields.Many2one('procurement.procedure', string="Procedure")
     partner_id = fields.Many2one('res.partner', string="Bidder", required=True)
-        company_id = fields.Many2one('res.company', string="Company", default=lambda self: self.env.company)
+    company_id = fields.Many2one('res.company', string="Company", default=lambda self: self.env.company)
     tax_id_number = fields.Char(string="Tax Identification Number (NIF)")
     legal_form = fields.Selection([
         ('sarl', 'SARL'), ('eurl', 'EURL'), ('spa', 'SPA'),
