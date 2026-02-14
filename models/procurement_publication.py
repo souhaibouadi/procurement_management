@@ -27,3 +27,5 @@ class ProcurementPublication(models.Model):
     anep_order_number = fields.Char(string="ANEP Order Number")
     publication_cost = fields.Float(string="Publication Cost (DZD)")
     notes = fields.Text(string="Notes")
+        reference = fields.Char(string="Reference")
+    content = fields.Text(string="Content")
