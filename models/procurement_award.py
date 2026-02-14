@@ -26,9 +26,9 @@ class ProcurementAward(models.Model):
     notice_id = fields.Many2one('procurement.notice', string="Linked Award Notice")
     state = fields.Selection([
         ('draft', 'Draft'),
+        ('confirmed', 'Confirmed'),
         ('published', 'Published'),
         ('appeal', 'Under Appeal'),
-        ('confirmed', 'Confirmed'),
         ('cancelled', 'Cancelled'),
     ], string="Status", default='draft')
     company_id = fields.Many2one('res.company', string="Company", default=lambda self: self.env.company)
@@ -40,6 +40,14 @@ class ProcurementAward(models.Model):
                 rec.appeal_end_date = rec.appeal_start_date + timedelta(days=10)
             else:
                 rec.appeal_end_date = False
+
+    def action_confirm(self):
+        """Confirm the award"""
+        self.write({'state': 'confirmed'})
+
+    def action_publish(self):
+        """Publish the award"""
+        self.write({'state': 'published'})
 
 
 class ProcurementAppeal(models.Model):
