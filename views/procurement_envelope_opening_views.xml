@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_procurement_envelope_opening_form" model="ir.ui.view">
+        <field name="name">procurement.envelope.opening.form</field>
+        <field name="model">procurement.envelope.opening</field>
+        <field name="arch" type="xml">
+            <form string="Envelope Opening">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="procedure_id"/>
+                            <field name="session_id"/>
+                            <field name="opening_date"/>
+                        </group>
+                        <group>
+                            <field name="envelope_type"/>
+                            <field name="bidder_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Content Details">
+                            <field name="content_details" nolabel="1"/>
+                        </page>
+                        <page string="Missing Documents">
+                            <field name="missing_documents" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_procurement_envelope_opening_tree" model="ir.ui.view">
+        <field name="name">procurement.envelope.opening.tree</field>
+        <field name="model">procurement.envelope.opening</field>
+        <field name="arch" type="xml">
+            <tree string="Envelope Openings">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="bidder_id"/>
+                <field name="envelope_type"/>
+                <field name="opening_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_procurement_envelope_opening" model="ir.actions.act_window">
+        <field name="name">Envelope Openings</field>
+        <field name="res_model">procurement.envelope.opening</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
