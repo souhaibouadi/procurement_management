@@ -63,6 +63,4 @@
         <field name="res_model">procurement.decision</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <menuitem id="menu_procurement_decision" name="Decisions" parent="menu_procurement_root" action="action_procurement_decision" sequence="90"/>
 </odoo>
