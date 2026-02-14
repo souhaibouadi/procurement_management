@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Order Letter Form View -->
+    <record id="view_order_letter_form" model="ir.ui.view">
+        <field name="name">procurement.order.letter.form</field>
+        <field name="model">procurement.order.letter</field>
+        <field name="arch" type="xml">
+            <form string="Order Letter">
+                <header>
+                    <button name="action_draft" string="Reset to Draft" type="object" states="cancelled" class="btn-secondary"/>
+                    <button name="action_send" string="Send" type="object" states="draft" class="btn-primary"/>
+                    <button name="action_acknowledge" string="Acknowledge Receipt" type="object" states="sent" class="btn-primary"/>
+                    <button name="action_execute" string="Start Execution" type="object" states="acknowledged" class="btn-success"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="draft" class="btn-secondary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,acknowledged,executing"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_service_orders" type="object" class="oe_stat_button" icon="fa-truck">
+                            <field name="service_order_count" widget="statinfo" string="Service Orders"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="procedure_id" options="{'no_create': True}" required="1"/>
+                            <field name="award_id" options="{'no_create': True}"/>
+                            <field name="partner_id" options="{'no_create': True}" required="1"/>
+                            <field name="letter_date" required="1"/>
+                        </group>
+                        <group>
+                            <field name="sent_date"/>
+                            <field name="acknowledgement_date"/>
+                            <field name="execution_start_date"/>
+                            <field name="validity_days"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Content" name="content">
+                            <group>
+                                <field name="subject" required="1"/>
+                            </group>
+                            <field name="body" placeholder="Enter order letter content..."/>
+                        </page>
+                        <page string="Items" name="items">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="lot_number"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id" groups="uom.group_uom"/>
+                                    <field name="unit_price" widget="monetary"/>
+                                    <field name="subtotal" widget="monetary"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="amount_total" widget="monetary" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page string="Conditions" name="conditions">
+                            <group>
+                                <group>
+                                    <field name="delivery_deadline"/>
+                                    <field name="delivery_location"/>
+                                    <field name="payment_terms"/>
+                                </group>
+                                <group>
+                                    <field name="guarantee_required"/>
+                                    <field name="guarantee_percentage" attrs="{'invisible': [('guarantee_required', '=', False)]}"/>
+                                    <field name="penalty_clause"/>
+                                </group>
+                            </group>
+                            <field name="special_conditions" placeholder="Special conditions..."/>
+                        </page>
+                        <page string="Attachments" name="attachments">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Order Letter Tree View -->
+    <record id="view_order_letter_tree" model="ir.ui.view">
+        <field name="name">procurement.order.letter.tree</field>
+        <field name="model">procurement.order.letter</field>
+        <field name="arch" type="xml">
+            <tree string="Order Letters" decoration-info="state=='draft'" decoration-primary="state=='sent'" decoration-warning="state=='acknowledged'" decoration-success="state=='executing'">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="partner_id"/>
+                <field name="letter_date"/>
+                <field name="amount_total" widget="monetary"/>
+                <field name="delivery_deadline"/>
+                <field name="state" widget="badge" decoration-info="state=='draft'" decoration-primary="state=='sent'" decoration-warning="state=='acknowledged'" decoration-success="state=='executing'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Order Letter Search View -->
+    <record id="view_order_letter_search" model="ir.ui.view">
+        <field name="name">procurement.order.letter.search</field>
+        <field name="model">procurement.order.letter</field>
+        <field name="arch" type="xml">
+            <search string="Search Order Letters">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="partner_id"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_sent" string="Sent" domain="[('state', '=', 'sent')]"/>
+                <filter name="filter_acknowledged" string="Acknowledged" domain="[('state', '=', 'acknowledged')]"/>
+                <filter name="filter_executing" string="Executing" domain="[('state', '=', 'executing')]"/>
+                <separator/>
+                <filter name="filter_this_month" string="This Month" domain="[('letter_date', '&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_procedure" string="Procedure" context="{'group_by': 'procedure_id'}"/>
+                    <filter name="group_partner" string="Supplier" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_date" string="Date" context="{'group_by': 'letter_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Order Letter Action -->
+    <record id="action_order_letter" model="ir.actions.act_window">
+        <field name="name">Order Letters</field>
+        <field name="res_model">procurement.order.letter</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_order_letter_search"/>
+        <field name="context">{'search_default_filter_draft': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new order letter
+            </p>
+            <p>
+                Order letters formally communicate award decisions to winning bidders.
+            </p>
+        </field>
+    </record>
+</odoo>
