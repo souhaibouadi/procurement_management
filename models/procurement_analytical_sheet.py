@@ -34,3 +34,25 @@ class ProcurementAnalyticalSheet(models.Model):
     final_ranking = fields.Text(string="Final Ranking")
     provisional_awardee_id = fields.Many2one('procurement.bidder', string="Provisional Awardee")
     notes = fields.Text(string="Notes")
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('validated', 'Validated'),
+        ('approved', 'Approved'),
+        ('cancelled', 'Cancelled'),
+    ], string="Status", default='draft')
+
+    def action_draft(self):
+        """Reset to draft state"""
+        self.write({'state': 'draft'})
+
+    def action_validate(self):
+        """Validate the analytical sheet"""
+        self.write({'state': 'validated'})
+
+    def action_approve(self):
+        """Approve the analytical sheet"""
+        self.write({'state': 'approved'})
+
+    def action_cancel(self):
+        """Cancel the analytical sheet"""
+        self.write({'state': 'cancelled'})
