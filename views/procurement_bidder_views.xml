@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_procurement_bidder_form" model="ir.ui.view">
+        <field name="name">procurement.bidder.form</field>
+        <field name="model">procurement.bidder</field>
+        <field name="arch" type="xml">
+            <form string="Bidder">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,qualified,awarded,rejected"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Bidder Information">
+                            <field name="partner_id"/>
+                            <field name="procedure_id"/>
+                            <field name="registration_date"/>
+                        </group>
+                        <group string="Bid Details">
+                            <field name="bid_amount"/>
+                            <field name="discount_percentage"/>
+                            <field name="final_amount"/>
+                        </group>
+                    </group>
+                    <group string="Technical Details">
+                        <field name="technical_score"/>
+                        <field name="financial_score"/>
+                        <field name="total_score"/>
+                    </group>
+                    <notebook>
+                        <page string="Documents">
+                            <field name="document_ids"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_procurement_bidder_tree" model="ir.ui.view">
+        <field name="name">procurement.bidder.tree</field>
+        <field name="model">procurement.bidder</field>
+        <field name="arch" type="xml">
+            <tree string="Bidders">
+                <field name="partner_id"/>
+                <field name="procedure_id"/>
+                <field name="bid_amount"/>
+                <field name="total_score"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_procurement_bidder" model="ir.actions.act_window">
+        <field name="name">Bidders</field>
+        <field name="res_model">procurement.bidder</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
