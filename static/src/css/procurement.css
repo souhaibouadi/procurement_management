@@ -1,0 +1,166 @@
+/* Procurement Management Module Styles */
+
+/* Dashboard Styles */
+.o_procurement_dashboard {
+    padding: 20px;
+}
+
+.o_procurement_dashboard .o_stat_card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
+}
+
+.o_procurement_dashboard .o_stat_card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.o_procurement_dashboard .o_stat_value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #714B67;
+}
+
+.o_procurement_dashboard .o_stat_label {
+    color: #666;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Procedure Timeline */
+.o_procedure_timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.o_procedure_timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e0e0e0;
+}
+
+.o_timeline_item {
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.o_timeline_item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #714B67;
+    border: 2px solid #fff;
+}
+
+.o_timeline_item.o_completed::before {
+    background: #28a745;
+}
+
+.o_timeline_item.o_current::before {
+    background: #ffc107;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
+}
+
+/* Bidder Cards */
+.o_bidder_card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #fff;
+}
+
+.o_bidder_card.o_winner {
+    border-color: #28a745;
+    background: rgba(40, 167, 69, 0.05);
+}
+
+.o_bidder_card .o_bidder_rank {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #714B67;
+}
+
+/* Evaluation Scoring */
+.o_score_bar {
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.o_score_bar .o_score_fill {
+    height: 100%;
+    background: linear-gradient(90deg, #28a745, #20c997);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Status Badges */
+.o_procurement_status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.o_status_draft { background: #6c757d; color: #fff; }
+.o_status_published { background: #17a2b8; color: #fff; }
+.o_status_open { background: #007bff; color: #fff; }
+.o_status_evaluation { background: #ffc107; color: #212529; }
+.o_status_awarded { background: #28a745; color: #fff; }
+.o_status_cancelled { background: #dc3545; color: #fff; }
+
+/* Committee Member Cards */
+.o_committee_member {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    margin-bottom: 8px;
+}
+
+.o_committee_member .o_member_avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.o_committee_member .o_member_role {
+    font-size: 0.8em;
+    color: #666;
+}
+
+/* Print Styles */
+@media print {
+    .o_procurement_dashboard .o_stat_card {
+        box-shadow: none;
+        border: 1px solid #dee2e6;
+    }
+    
+    .o_no_print {
+        display: none !important;
+    }
+}
