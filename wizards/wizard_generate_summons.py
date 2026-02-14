@@ -10,8 +10,7 @@ class WizardGenerateSummons(models.TransientModel):
     _description = 'Generate Summons Wizard'
 
     session_id = fields.Many2one(
-        'procurement.session',
-        string='Session',
+        'procurement.committee.session',        string='Session',
         required=True,
         default=lambda self: self.env.context.get('active_id')
     )
