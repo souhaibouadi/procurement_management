@@ -24,3 +24,25 @@ class ProcurementMinutes(models.Model):
     attendee_ids = fields.Many2many('res.partner', 'procurement_minutes_attendee_rel', string="Attending Members")
     signatory_ids = fields.Many2many('res.partner', 'procurement_minutes_signatory_rel', string="Signatories")
     attachment_ids = fields.Many2many('ir.attachment', string="Attachments")
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('validated', 'Validated'),
+        ('approved', 'Approved'),
+        ('cancelled', 'Cancelled'),
+    ], string="Status", default='draft')
+
+    def action_draft(self):
+        """Reset to draft state"""
+        self.write({'state': 'draft'})
+
+    def action_validate(self):
+        """Validate the minutes"""
+        self.write({'state': 'validated'})
+
+    def action_approve(self):
+        """Approve the minutes"""
+        self.write({'state': 'approved'})
+
+    def action_cancel(self):
+        """Cancel the minutes"""
+        self.write({'state': 'cancelled'})
