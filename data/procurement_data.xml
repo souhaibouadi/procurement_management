@@ -10,7 +10,7 @@
 
         <record id="committee_type_market" model="procurement.committee">
             <field name="name">Market Committee</field>
-            <field name="committee_type">market</field>
+            <field name="committee_type">market_committee</field>
         </record>
 
         <!-- Mail Templates -->
