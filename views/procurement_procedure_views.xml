@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Procurement Procedure Form View -->
+    <record id="view_procurement_procedure_form" model="ir.ui.view">
+        <field name="name">procurement.procedure.form</field>
+        <field name="model">procurement.procedure</field>
+        <field name="arch" type="xml">
+            <form string="Procurement Procedure">
+                <header>
+                    <button name="action_needs_assessment" string="Needs Assessment" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_estimation" string="Estimation" type="object" class="btn-primary" invisible="state != 'needs_assessment'"/>
+                    <button name="action_specs_drafting" string="Draft Specs" type="object" class="btn-primary" invisible="state != 'estimation'"/>
+                    <button name="action_specs_review" string="Review Specs" type="object" class="btn-primary" invisible="state != 'specs_drafting'"/>
+                    <button name="action_specs_approval" string="Approve Specs" type="object" class="btn-primary" invisible="state not in ('specs_review', 'specs_correction')"/>
+                    <button name="action_publication" string="Publish" type="object" class="btn-primary" invisible="state != 'specs_approval'"/>
+                    <button name="action_envelope_opening" string="Open Envelopes" type="object" class="btn-primary" invisible="state != 'bid_submission'"/>
+                    <button name="action_evaluation" string="Evaluate" type="object" class="btn-primary" invisible="state != 'envelope_opening'"/>
+                    <button name="action_provisional_award" string="Provisional Award" type="object" class="btn-primary" invisible="state != 'result'"/>
+                    <button name="action_final_award" string="Final Award" type="object" class="btn-primary" invisible="state != 'appeal_period'"/>
+                    <button name="action_contract_setup" string="Setup Contract" type="object" class="btn-primary" invisible="state != 'contract_approval'"/>
+                    <button name="action_execution" string="Start Execution" type="object" class="btn-primary" invisible="state != 'contract_setup'"/>
+                    <button name="action_closed" string="Close" type="object" class="btn-success" invisible="state != 'final_acceptance'"/>
+                    <button name="action_cancelled" string="Cancel" type="object" class="btn-danger" invisible="state in ('closed', 'cancelled')"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object" invisible="state not in ('cancelled', 'unsuccessful')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,estimation,specs_approval,publication,evaluation,provisional_award,contract_setup,execution,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(procurement_management.action_procurement_committee)d" type="action" class="oe_stat_button" icon="fa-users">
+                            <field name="committee_ids" widget="statinfo" string="Committees"/>
+                        </button>
+                        <button name="%(procurement_management.action_procurement_bidder)d" type="action" class="oe_stat_button" icon="fa-building" context="{'default_procedure_id': active_id}">
+                            <field name="bidder_ids" widget="statinfo" string="Bidders"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Basic Information">
+                            <field name="procedure_reference"/>
+                            <field name="subject"/>
+                            <field name="service_type"/>
+                            <field name="structure_level"/>
+                            <field name="procedure_type" readonly="1"/>
+                        </group>
+                        <group string="Financial Information">
+                            <field name="estimated_amount_excl_tax"/>
+                            <field name="vat_rate"/>
+                            <field name="estimated_amount_incl_tax" readonly="1"/>
+                            <field name="allocated_budget"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Dates">
+                            <field name="creation_date"/>
+                            <field name="launch_date"/>
+                            <field name="submission_deadline"/>
+                            <field name="envelope_opening_date"/>
+                            <field name="preparation_duration"/>
+                        </group>
+                        <group string="Contracting Authority">
+                            <field name="contracting_authority_name"/>
+                            <field name="tax_id_number"/>
+                            <field name="authorizing_officer_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Location">
+                            <field name="submission_address"/>
+                            <field name="opening_location"/>
+                        </group>
+                        <group string="Lot Information">
+                            <field name="lot_type"/>
+                            <field name="lot_justification" invisible="lot_type != 'separate'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Committees" name="committees">
+                            <field name="committee_ids" context="{'default_procedure_id': active_id}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="committee_type"/>
+                                    <field name="president_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Sessions" name="sessions">
+                            <field name="session_ids" context="{'default_procedure_id': active_id}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="session_date"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Bidders" name="bidders">
+                            <field name="bidder_ids" context="{'default_procedure_id': active_id}">
+                                <tree>
+                                    <field name="partner_id"/>
+                                    <field name="bid_amount"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Evaluations" name="evaluations">
+                            <field name="evaluation_ids" context="{'default_procedure_id': active_id}"/>
+                        </page>
+                        <page string="Documents" name="documents">
+                            <field name="document_ids" context="{'default_procedure_id': active_id}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Procurement Procedure Tree View -->
+    <record id="view_procurement_procedure_tree" model="ir.ui.view">
+        <field name="name">procurement.procedure.tree</field>
+        <field name="model">procurement.procedure</field>
+        <field name="arch" type="xml">
+            <tree string="Procurement Procedures" decoration-info="state == 'draft'" decoration-warning="state in ('evaluation', 'appeal_period')" decoration-success="state == 'closed'">
+                <field name="name"/>
+                <field name="procedure_reference"/>
+                <field name="subject"/>
+                <field name="service_type"/>
+                <field name="procedure_type"/>
+                <field name="estimated_amount_incl_tax" sum="Total"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'closed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Procurement Procedure Search View -->
+    <record id="view_procurement_procedure_search" model="ir.ui.view">
+        <field name="name">procurement.procedure.search</field>
+        <field name="model">procurement.procedure</field>
+        <field name="arch" type="xml">
+            <search string="Search Procedures">
+                <field name="name"/>
+                <field name="procedure_reference"/>
+                <field name="subject"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="In Progress" name="in_progress" domain="[('state', 'not in', ('draft', 'closed', 'cancelled', 'unsuccessful'))]"/>
+                <filter string="Closed" name="closed" domain="[('state', '=', 'closed')]"/>
+                <separator/>
+                <filter string="Works" name="works" domain="[('service_type', '=', 'works')]"/>
+                <filter string="Supplies" name="supplies" domain="[('service_type', '=', 'supplies')]"/>
+                <filter string="Studies" name="studies" domain="[('service_type', '=', 'studies')]"/>
+                <filter string="Services" name="services" domain="[('service_type', '=', 'services')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Service Type" name="group_service" context="{'group_by': 'service_type'}"/>
+                    <filter string="Procedure Type" name="group_procedure" context="{'group_by': 'procedure_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Procurement Procedure Action -->
+    <record id="action_procurement_procedure" model="ir.actions.act_window">
+        <field name="name">Procurement Procedures</field>
+        <field name="res_model">procurement.procedure</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_procurement_procedure_search"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new procurement procedure
+            </p>
+        </field>
+    </record>
+
+</odoo>
