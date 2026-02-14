@@ -2,6 +2,7 @@
 from . import procurement_procedure
 from . import procurement_committee
 from . import procurement_committee_session
+from . import procurement_committee_member
 from . import procurement_summons
 from . import procurement_notice
 from . import procurement_publication
