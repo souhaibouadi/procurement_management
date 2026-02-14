@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Score Evaluation Wizard Form View -->
+    <record id="view_wizard_score_evaluation_form" model="ir.ui.view">
+        <field name="name">procurement.wizard.score.evaluation.form</field>
+        <field name="model">procurement.wizard.score.evaluation</field>
+        <field name="arch" type="xml">
+            <form string="Score Evaluation">
+                <group>
+                    <group>
+                        <field name="evaluation_id" required="1" options="{'no_create': True}"/>
+                        <field name="evaluation_type" readonly="1"/>
+                        <field name="procedure_id" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="auto_calculate"/>
+                        <field name="apply_weights"/>
+                        <field name="recalculate_existing"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Bidders" name="bidders">
+                        <field name="bidder_ids">
+                            <tree editable="bottom">
+                                <field name="bidder_id" options="{'no_create': True}"/>
+                                <field name="technical_score"/>
+                                <field name="financial_score"/>
+                                <field name="combined_score" readonly="1"/>
+                                <field name="rank" readonly="1"/>
+                                <field name="is_selected"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Criteria" name="criteria">
+                        <field name="criteria_ids">
+                            <tree>
+                                <field name="criteria_name"/>
+                                <field name="criteria_type"/>
+                                <field name="max_score"/>
+                                <field name="weight"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <group string="Summary">
+                    <group>
+                        <field name="total_bidders"/>
+                        <field name="qualified_bidders"/>
+                        <field name="disqualified_bidders"/>
+                    </group>
+                    <group>
+                        <field name="highest_score"/>
+                        <field name="lowest_score"/>
+                        <field name="average_score"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_calculate_scores" string="Calculate Scores" type="object" class="btn-primary"/>
+                    <button name="action_apply_selection" string="Apply Selection" type="object" class="btn-success" attrs="{'invisible': [('auto_calculate', '=', True)]}"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Score Evaluation Wizard Action -->
+    <record id="action_wizard_score_evaluation" model="ir.actions.act_window">
+        <field name="name">Score Evaluation</field>
+        <field name="res_model">procurement.wizard.score.evaluation</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="procurement_management.model_procurement_evaluation"/>
+        <field name="binding_view_types">form</field>
+    </record>
+</odoo>
