@@ -41,6 +41,7 @@ class WizardGenerateSummons(models.TransientModel):
     )
     member_ids = fields.Many2many(
         'procurement.committee.member',
+                relation='wizard_summons_member_rel',
         string='Members to Summon',
         compute='_compute_member_ids',
         store=True,
