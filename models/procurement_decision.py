@@ -29,6 +29,11 @@ class ProcurementDecision(models.Model):
     signatory_id = fields.Many2one('res.partner', string="Signatory (President/Vice-President)")
     state = fields.Selection([
         ('draft', 'Draft'),
+        ('approved', 'Approved'),
         ('signed', 'Signed'),
         ('notified', 'Notified'),
     ], string="Status", default='draft')
+
+    def action_approve(self):
+        """Approve the decision"""
+        self.write({'state': 'approved'})
