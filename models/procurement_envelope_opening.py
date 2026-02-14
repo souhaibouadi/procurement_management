@@ -19,6 +19,16 @@ class ProcurementEnvelopeOpening(models.Model):
         ('opened', 'Opened'),
         ('validated', 'Validated'),
     ], string="Status", default='draft')
+        name = fields.Char(string="Opening Name", required=True)
+    session_id = fields.Many2one('procurement.committee.session', string="Session")
+    envelope_type = fields.Selection([
+        ('candidacy', 'Candidacy'),
+        ('technical', 'Technical'),
+        ('financial', 'Financial'),
+    ], string="Envelope Type")
+    bidder_id = fields.Many2one('procurement.bidder', string="Bidder")
+    content_details = fields.Text(string="Content Details")
+    missing_documents = fields.Text(string="Missing Documents")
 
 
 class ProcurementEnvelopeDetail(models.Model):
