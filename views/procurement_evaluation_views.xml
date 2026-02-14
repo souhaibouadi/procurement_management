@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_procurement_evaluation_form" model="ir.ui.view">
+        <field name="name">procurement.evaluation.form</field>
+        <field name="model">procurement.evaluation</field>
+        <field name="arch" type="xml">
+            <form string="Evaluation">
+                <header>
+                    <button name="action_validate" string="Validate" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,validated"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="procedure_id"/>
+                            <field name="bidder_id"/>
+                            <field name="evaluation_date"/>
+                        </group>
+                        <group>
+                            <field name="technical_score"/>
+                            <field name="financial_score"/>
+                            <field name="total_score"/>
+                            <field name="rank"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Technical Evaluation">
+                            <field name="technical_notes" nolabel="1"/>
+                        </page>
+                        <page string="Financial Evaluation">
+                            <field name="financial_notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_procurement_evaluation_tree" model="ir.ui.view">
+        <field name="name">procurement.evaluation.tree</field>
+        <field name="model">procurement.evaluation</field>
+        <field name="arch" type="xml">
+            <tree string="Evaluations">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="bidder_id"/>
+                <field name="total_score"/>
+                <field name="rank"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_procurement_evaluation" model="ir.actions.act_window">
+        <field name="name">Evaluations</field>
+        <field name="res_model">procurement.evaluation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
