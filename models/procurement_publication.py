@@ -6,6 +6,13 @@ class ProcurementPublication(models.Model):
     _name = 'procurement.publication'
     _description = 'Publication Record'
 
+    name = fields.Char(string="Publication Name", required=True)
+    media_type = fields.Selection([
+        ('newspaper', 'Newspaper'),
+        ('website', 'Website'),
+        ('bulletin', 'Official Bulletin'),
+        ('other', 'Other'),
+    ], string="Media Type")
     procedure_id = fields.Many2one('procurement.procedure', string="Procedure")
     publication_type = fields.Selection([
         ('press', 'National Press'),
