@@ -16,6 +16,10 @@ class ProcurementBidDeposit(models.Model):
     envelope_count = fields.Integer(string="Number of Envelopes")
     envelope_contents = fields.Text(string="Contents (Candidacy + Technical + Financial)")
     notes = fields.Text(string="Notes")
+    name = fields.Char(string="Deposit Name", required=True)
+    receipt_number = fields.Char(string="Receipt Number")
+    depositor_name = fields.Char(string="Depositor Name")
+    depositor_function = fields.Char(string="Depositor Function")
 
     @api.depends('deposit_date', 'deposit_time', 'procedure_id.submission_deadline')
     def _compute_within_deadline(self):
