@@ -17,12 +17,12 @@
                     <group>
                         <group string="Procurement Reference">
                             <field name="procurement_procedure_id" options="{'no_create': True}"/>
-                            <field name="procurement_award_id" options="{'no_create': True}" attrs="{'invisible': [('procurement_procedure_id', '=', False)]}"/>
-                            <field name="procurement_service_order_id" options="{'no_create': True}" attrs="{'invisible': [('procurement_procedure_id', '=', False)]}"/>
+                            <field name="procurement_award_id" options="{'no_create': True}" invisible="not procurement_procedure_id"/>
+                            <field name="procurement_service_order_id" options="{'no_create': True}" invisible="not procurement_procedure_id"/>
                         </group>
                         <group string="Contract Information">
-                            <field name="procurement_contract_number" attrs="{'invisible': [('procurement_procedure_id', '=', False)]}"/>
-                            <field name="procurement_contract_date" attrs="{'invisible': [('procurement_procedure_id', '=', False)]}"/>
+                            <field name="procurement_contract_number" invisible="not procurement_procedure_id"/>
+                            <field name="procurement_contract_date" invisible="not procurement_procedure_id"/>
                             <field name="is_public_procurement"/>
                         </group>
                     </group>
