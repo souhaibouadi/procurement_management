@@ -19,6 +19,7 @@ class ProcurementSummons(models.Model):
     meeting_location = fields.Char(string="Meeting Location")
     subject = fields.Char(string="Summons Subject")
     agenda = fields.Text(string="Agenda")
+    content = fields.Text(string="Content")
     signatory_id = fields.Many2one('res.partner', string="Signatory")
     state = fields.Selection([
         ('draft', 'Draft'),
