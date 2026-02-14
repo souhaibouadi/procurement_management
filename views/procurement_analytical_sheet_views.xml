@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Analytical Sheet Form View -->
+    <record id="view_analytical_sheet_form" model="ir.ui.view">
+        <field name="name">procurement.analytical.sheet.form</field>
+        <field name="model">procurement.analytical.sheet</field>
+        <field name="arch" type="xml">
+            <form string="Analytical Sheet">
+                <header>
+                    <button name="action_draft" string="Reset to Draft" type="object" states="cancelled" class="btn-secondary"/>
+                    <button name="action_validate" string="Validate" type="object" states="draft" class="btn-primary"/>
+                    <button name="action_approve" string="Approve" type="object" states="validated" class="btn-primary" groups="procurement_management.group_procurement_manager"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="draft,validated" class="btn-secondary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,validated,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="procedure_id" options="{'no_create': True}" required="1"/>
+                            <field name="evaluation_id" options="{'no_create': True}"/>
+                            <field name="date" required="1"/>
+                            <field name="prepared_by" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="sheet_type"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="total_amount" widget="monetary"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Items" name="items">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="bidder_id" options="{'no_create': True}"/>
+                                    <field name="lot_number"/>
+                                    <field name="item_description"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price" widget="monetary"/>
+                                    <field name="total_price" widget="monetary"/>
+                                    <field name="discount_percentage"/>
+                                    <field name="final_price" widget="monetary"/>
+                                    <field name="remarks"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Summary" name="summary">
+                            <group>
+                                <group>
+                                    <field name="subtotal" widget="monetary"/>
+                                    <field name="total_discount" widget="monetary"/>
+                                    <field name="tax_amount" widget="monetary"/>
+                                    <field name="total_amount" widget="monetary"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Comparison" name="comparison">
+                            <field name="comparison_ids">
+                                <tree>
+                                    <field name="bidder_id"/>
+                                    <field name="total_offer" widget="monetary"/>
+                                    <field name="technical_score"/>
+                                    <field name="financial_score"/>
+                                    <field name="final_score"/>
+                                    <field name="rank"/>
+                                    <field name="recommendation"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" placeholder="Additional notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Analytical Sheet Tree View -->
+    <record id="view_analytical_sheet_tree" model="ir.ui.view">
+        <field name="name">procurement.analytical.sheet.tree</field>
+        <field name="model">procurement.analytical.sheet</field>
+        <field name="arch" type="xml">
+            <tree string="Analytical Sheets" decoration-info="state=='draft'" decoration-warning="state=='validated'" decoration-success="state=='approved'">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="sheet_type"/>
+                <field name="date"/>
+                <field name="total_amount" widget="monetary"/>
+                <field name="prepared_by"/>
+                <field name="state" widget="badge" decoration-info="state=='draft'" decoration-warning="state=='validated'" decoration-success="state=='approved'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Analytical Sheet Search View -->
+    <record id="view_analytical_sheet_search" model="ir.ui.view">
+        <field name="name">procurement.analytical.sheet.search</field>
+        <field name="model">procurement.analytical.sheet</field>
+        <field name="arch" type="xml">
+            <search string="Search Analytical Sheets">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="prepared_by"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_validated" string="Validated" domain="[('state', '=', 'validated')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_technical" string="Technical" domain="[('sheet_type', '=', 'technical')]"/>
+                <filter name="filter_financial" string="Financial" domain="[('sheet_type', '=', 'financial')]"/>
+                <filter name="filter_combined" string="Combined" domain="[('sheet_type', '=', 'combined')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_procedure" string="Procedure" context="{'group_by': 'procedure_id'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'sheet_type'}"/>
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_date" string="Date" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Analytical Sheet Action -->
+    <record id="action_analytical_sheet" model="ir.actions.act_window">
+        <field name="name">Analytical Sheets</field>
+        <field name="res_model">procurement.analytical.sheet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_analytical_sheet_search"/>
+        <field name="context">{'search_default_filter_draft': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new analytical sheet
+            </p>
+            <p>
+                Analytical sheets provide detailed analysis and comparison of bids for evaluation.
+            </p>
+        </field>
+    </record>
+</odoo>
