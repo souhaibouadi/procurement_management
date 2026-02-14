@@ -2,10 +2,10 @@
 <odoo>
     <data noupdate="1">
 
-        <!-- Consultation: Users can only see their own company consultations -->
-        <record id="rule_consultation_user" model="ir.rule">
-            <field name="name">Consultation: User Company Rule</field>
-            <field name="model_id" ref="model_procurement_consultation"/>
+        <!-- Procedure: Users can only see their own company procedures -->
+        <record id="rule_procedure_user" model="ir.rule">
+            <field name="name">Procedure: User Company Rule</field>
+            <field name="model_id" ref="model_procurement_procedure"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
             <field name="groups" eval="[(4, ref('group_procurement_user'))]"/>
             <field name="perm_read" eval="True"/>
@@ -14,10 +14,10 @@
             <field name="perm_unlink" eval="False"/>
         </record>
 
-        <!-- Consultation: Managers see all in their company -->
-        <record id="rule_consultation_manager" model="ir.rule">
-            <field name="name">Consultation: Manager Company Rule</field>
-            <field name="model_id" ref="model_procurement_consultation"/>
+        <!-- Procedure: Managers see all in their company -->
+        <record id="rule_procedure_manager" model="ir.rule">
+            <field name="name">Procedure: Manager Company Rule</field>
+            <field name="model_id" ref="model_procurement_procedure"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
             <field name="groups" eval="[(4, ref('group_procurement_manager'))]"/>
             <field name="perm_read" eval="True"/>
@@ -26,10 +26,10 @@
             <field name="perm_unlink" eval="True"/>
         </record>
 
-        <!-- Bid: Users see only published consultations bids -->
-        <record id="rule_bid_user" model="ir.rule">
-            <field name="name">Bid: User Rule</field>
-            <field name="model_id" ref="model_procurement_bid"/>
+        <!-- Bidder: Company rule -->
+        <record id="rule_bidder_user" model="ir.rule">
+            <field name="name">Bidder: User Rule</field>
+            <field name="model_id" ref="model_procurement_bidder"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
             <field name="groups" eval="[(4, ref('group_procurement_user'))]"/>
             <field name="perm_read" eval="True"/>
@@ -50,6 +50,18 @@
             <field name="perm_unlink" eval="False"/>
         </record>
 
+        <!-- Committee: Manager full access -->
+        <record id="rule_committee_manager" model="ir.rule">
+            <field name="name">Committee: Manager Rule</field>
+            <field name="model_id" ref="model_procurement_committee"/>
+            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
+            <field name="groups" eval="[(4, ref('group_procurement_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
         <!-- Evaluation: Committee members can only access evaluations they are assigned to -->
         <record id="rule_evaluation_committee" model="ir.rule">
             <field name="name">Evaluation: Committee Member Rule</field>
@@ -62,28 +74,16 @@
             <field name="perm_unlink" eval="False"/>
         </record>
 
-        <!-- Contract: Company rule -->
-        <record id="rule_contract_company" model="ir.rule">
-            <field name="name">Contract: Company Rule</field>
-            <field name="model_id" ref="model_procurement_contract"/>
+        <!-- Award: Company rule -->
+        <record id="rule_award_company" model="ir.rule">
+            <field name="name">Award: Company Rule</field>
+            <field name="model_id" ref="model_procurement_award"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
             <field name="groups" eval="[(4, ref('group_procurement_manager'))]"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_unlink" eval="True"/>
-        </record>
-
-        <!-- Appeal: Company rule -->
-        <record id="rule_appeal_company" model="ir.rule">
-            <field name="name">Appeal: Company Rule</field>
-            <field name="model_id" ref="model_procurement_appeal"/>
-            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
-            <field name="groups" eval="[(4, ref('group_procurement_user'))]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_unlink" eval="False"/>
         </record>
 
     </data>
