@@ -15,6 +15,7 @@
     'data': [
         'security/security_groups.xml',
         'security/ir.model.access.csv',
+        'security/record_rules.xml',
         'data/sequence_data.xml',
         'data/procurement_data.xml',
         'views/procurement_procedure_views.xml',
