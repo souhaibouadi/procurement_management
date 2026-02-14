@@ -16,7 +16,7 @@
                         <group>
                             <field name="procedure_id" options="{'no_create': True}"/>
                             <field name="document_type" required="1"/>
-                            <field name="document_number"/>
+                            <field name="document_reference"/>
                             <field name="date" required="1"/>
                         </group>
                         <group>
@@ -66,7 +66,7 @@
                 <field name="name"/>
                 <field name="procedure_id"/>
                 <field name="document_type"/>
-                <field name="document_number"/>
+                <field name="document_reference"/>
                 <field name="date"/>
                 <field name="partner_id"/>
                 <field name="is_required"/>
@@ -122,7 +122,7 @@
                 <field name="name"/>
                 <field name="procedure_id"/>
                 <field name="partner_id"/>
-                <field name="document_number"/>
+                <field name="document_reference"/>
                 <separator/>
                 <filter name="filter_required" string="Required" domain="[('is_required', '=', True)]"/>
                 <filter name="filter_received" string="Received" domain="[('is_received', '=', True)]"/>
