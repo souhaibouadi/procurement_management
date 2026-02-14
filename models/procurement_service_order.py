@@ -22,6 +22,28 @@ class ProcurementServiceOrder(models.Model):
     handover_date = fields.Date(string="Handover Date")
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('signed', 'Signed'),
-        ('notified', 'Notified'),
+        ('confirmed', 'Confirmed'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
     ], string="Status", default='draft')
+
+    def action_draft(self):
+        """Reset to draft state"""
+        self.write({'state': 'draft'})
+
+    def action_confirm(self):
+        """Confirm the service order"""
+        self.write({'state': 'confirmed'})
+
+    def action_start(self):
+        """Start execution of the service order"""
+        self.write({'state': 'in_progress'})
+
+    def action_complete(self):
+        """Mark the service order as completed"""
+        self.write({'state': 'completed'})
+
+    def action_cancel(self):
+        """Cancel the service order"""
+        self.write({'state': 'cancelled'})
