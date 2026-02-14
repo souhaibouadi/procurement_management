@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Purchase Order Form View -->
+    <record id="view_purchase_order_form_inherit_procurement" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.procurement</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Procurement fields to header -->
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="procurement_procedure_id" options="{'no_create': True}" groups="procurement_management.group_procurement_user"/>
+            </xpath>
+            
+            <!-- Add Procurement tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Procurement" name="procurement" groups="procurement_management.group_procurement_user">
+                    <group>
+                        <group string="Procurement Reference">
+                            <field name="procurement_procedure_id" options="{'no_create': True}"/>
+                            <field name="procurement_award_id" options="{'no_create': True}" attrs="{'invisible': [('procurement_procedure_id', '=', False)]}"/>
+                            <field name="procurement_service_order_id" options="{'no_create': True}" attrs="{'invisible': [('procurement_procedure_id', '=', False)]}"/>
+                        </group>
+                        <group string="Contract Information">
+                            <field name="procurement_contract_number" attrs="{'invisible': [('procurement_procedure_id', '=', False)]}"/>
+                            <field name="procurement_contract_date" attrs="{'invisible': [('procurement_procedure_id', '=', False)]}"/>
+                            <field name="is_public_procurement"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Purchase Order Tree View -->
+    <record id="view_purchase_order_tree_inherit_procurement" model="ir.ui.view">
+        <field name="name">purchase.order.tree.inherit.procurement</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="procurement_procedure_id" optional="hide" groups="procurement_management.group_procurement_user"/>
+                <field name="is_public_procurement" optional="hide" groups="procurement_management.group_procurement_user"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Purchase Order Search View -->
+    <record id="view_purchase_order_search_inherit_procurement" model="ir.ui.view">
+        <field name="name">purchase.order.search.inherit.procurement</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_purchases']" position="after">
+                <separator/>
+                <filter name="filter_public_procurement" string="Public Procurement" domain="[('is_public_procurement', '=', True)]" groups="procurement_management.group_procurement_user"/>
+                <filter name="filter_has_procedure" string="With Procedure" domain="[('procurement_procedure_id', '!=', False)]" groups="procurement_management.group_procurement_user"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter name="group_procedure" string="Procedure" context="{'group_by': 'procurement_procedure_id'}" groups="procurement_management.group_procurement_user"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Partner Form View for Procurement -->
+    <record id="view_partner_form_inherit_procurement" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.procurement</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Procurement" name="procurement" groups="procurement_management.group_procurement_user">
+                    <group>
+                        <group string="Supplier Qualification">
+                            <field name="is_procurement_supplier"/>
+                            <field name="supplier_registration_number" attrs="{'invisible': [('is_procurement_supplier', '=', False)]}"/>
+                            <field name="supplier_qualification_date" attrs="{'invisible': [('is_procurement_supplier', '=', False)]}"/>
+                            <field name="supplier_qualification_expiry" attrs="{'invisible': [('is_procurement_supplier', '=', False)]}"/>
+                        </group>
+                        <group string="Business Information">
+                            <field name="fiscal_id"/>
+                            <field name="commerce_register"/>
+                            <field name="cnas_number"/>
+                            <field name="casnos_number"/>
+                        </group>
+                    </group>
+                    <group string="Procurement Statistics" attrs="{'invisible': [('is_procurement_supplier', '=', False)]}">
+                        <field name="procurement_bid_count"/>
+                        <field name="procurement_award_count"/>
+                        <field name="procurement_contract_count"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
