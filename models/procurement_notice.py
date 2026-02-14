@@ -47,7 +47,16 @@ class ProcurementNotice(models.Model):
         ('draft', 'Draft'),
         ('validated', 'Validated'),
         ('published', 'Published'),
+                ('cancelled', 'Cancelled'),
     ], string="Status", default='draft')
+
+    def action_publish(self):
+        """Publish the notice"""
+        self.write({'state': 'published'})
+
+    def action_cancel(self):
+        """Cancel the notice"""
+        self.write({'state': 'cancelled'})
 
 
 class ProcurementNoticeJournal(models.Model):
