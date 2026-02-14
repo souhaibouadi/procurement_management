@@ -5,101 +5,59 @@
         <field name="name">procurement.minutes.form</field>
         <field name="model">procurement.minutes</field>
         <field name="arch" type="xml">
-            <form string="Session Minutes">
+            <form string="Minutes">
                 <header>
-                    <button name="action_draft" string="Reset to Draft" type="object" states="cancelled" class="btn-secondary"/>
-                    <button name="action_validate" string="Validate" type="object" states="draft" class="btn-primary"/>
-                    <button name="action_approve" string="Approve" type="object" states="validated" class="btn-primary" groups="procurement_management.group_procurement_manager"/>
-                    <button name="action_cancel" string="Cancel" type="object" states="draft,validated" class="btn-secondary" confirm="Are you sure you want to cancel this minutes?"/>
+                    <button name="action_draft" string="Reset to Draft" type="object" invisible="state != 'cancelled'" class="btn-secondary"/>
+                    <button name="action_validate" string="Validate" type="object" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_approve" string="Approve" type="object" invisible="state != 'validated'" class="btn-primary" groups="procurement_management.group_procurement_manager"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state not in ['draft', 'validated']" class="btn-secondary" confirm="Are you sure you want to cancel this minutes?"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,validated,approved"/>
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-file-o">
-                            <field name="document_count" widget="statinfo" string="Documents"/>
-                        </button>
-                    </div>
-                    <div class="oe_title">
-                        <h1>
-                            <field name="name" readonly="1"/>
-                        </h1>
-                    </div>
                     <group>
                         <group>
-                            <field name="session_id" options="{'no_create': True}" required="1"/>
-                            <field name="procedure_id" readonly="1"/>
-                            <field name="minutes_type" required="1"/>
-                            <field name="date" required="1"/>
+                            <field name="name"/>
+                            <field name="procedure_id"/>
+                            <field name="committee_id"/>
+                            <field name="minutes_type"/>
                         </group>
                         <group>
-                            <field name="start_time"/>
-                            <field name="end_time"/>
-                            <field name="location"/>
-                            <field name="president_id" options="{'no_create': True}"/>
+                            <field name="minutes_date"/>
                         </group>
                     </group>
                     <notebook>
-                        <page string="Attendees" name="attendees">
+                        <page string="Content">
+                            <field name="content" nolabel="1"/>
+                        </page>
+                        <page string="Findings">
+                            <field name="findings" nolabel="1"/>
+                        </page>
+                        <page string="Reservations">
+                            <field name="reservations" nolabel="1"/>
+                        </page>
+                        <page string="Attendees">
                             <field name="attendee_ids">
-                                <tree editable="bottom">
-                                    <field name="member_id" options="{'no_create': True}"/>
-                                    <field name="member_role" readonly="1"/>
-                                    <field name="attendance_status"/>
-                                    <field name="arrival_time"/>
-                                    <field name="departure_time"/>
-                                    <field name="signature" invisible="1"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Agenda" name="agenda">
-                            <field name="agenda_ids">
-                                <tree editable="bottom">
-                                    <field name="sequence" widget="handle"/>
+                                <tree>
                                     <field name="name"/>
-                                    <field name="description"/>
-                                    <field name="presenter_id" options="{'no_create': True}"/>
-                                    <field name="duration"/>
-                                    <field name="status"/>
                                 </tree>
                             </field>
                         </page>
-                        <page string="Discussions" name="discussions">
-                            <field name="discussion_summary" placeholder="Enter summary of discussions..."/>
-                        </page>
-                        <page string="Decisions" name="decisions">
-                            <field name="decision_ids">
-                                <tree editable="bottom">
-                                    <field name="sequence" widget="handle"/>
-                                    <field name="decision_number"/>
-                                    <field name="description"/>
-                                    <field name="vote_for"/>
-                                    <field name="vote_against"/>
-                                    <field name="vote_abstain"/>
-                                    <field name="is_unanimous"/>
+                        <page string="Signatories">
+                            <field name="signatory_ids">
+                                <tree>
+                                    <field name="name"/>
                                 </tree>
                             </field>
                         </page>
-                        <page string="Reservations" name="reservations">
-                            <field name="reservation_ids">
-                                <tree editable="bottom">
-                                    <field name="member_id" options="{'no_create': True}"/>
-                                    <field name="reservation_text"/>
-                                    <field name="response"/>
+                        <page string="Attachments">
+                            <field name="attachment_ids">
+                                <tree>
+                                    <field name="name"/>
                                 </tree>
                             </field>
-                        </page>
-                        <page string="Notes" name="notes">
-                            <group>
-                                <field name="notes" nolabel="1" placeholder="Additional notes..."/>
-                            </group>
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
-                </div>
             </form>
         </field>
     </record>
@@ -109,63 +67,20 @@
         <field name="name">procurement.minutes.tree</field>
         <field name="model">procurement.minutes</field>
         <field name="arch" type="xml">
-            <tree string="Session Minutes" decoration-info="state=='draft'" decoration-warning="state=='validated'" decoration-success="state=='approved'" decoration-danger="state=='cancelled'">
+            <tree string="Minutes">
                 <field name="name"/>
-                <field name="session_id"/>
                 <field name="procedure_id"/>
                 <field name="minutes_type"/>
-                <field name="date"/>
-                <field name="president_id"/>
-                <field name="state" widget="badge" decoration-info="state=='draft'" decoration-warning="state=='validated'" decoration-success="state=='approved'" decoration-danger="state=='cancelled'"/>
+                <field name="minutes_date"/>
+                <field name="state" widget="badge"/>
             </tree>
-        </field>
-    </record>
-
-    <!-- Procurement Minutes Search View -->
-    <record id="view_procurement_minutes_search" model="ir.ui.view">
-        <field name="name">procurement.minutes.search</field>
-        <field name="model">procurement.minutes</field>
-        <field name="arch" type="xml">
-            <search string="Search Minutes">
-                <field name="name"/>
-                <field name="session_id"/>
-                <field name="procedure_id"/>
-                <field name="president_id"/>
-                <separator/>
-                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
-                <filter name="filter_validated" string="Validated" domain="[('state', '=', 'validated')]"/>
-                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
-                <separator/>
-                <filter name="filter_opening" string="Opening" domain="[('minutes_type', '=', 'opening')]"/>
-                <filter name="filter_evaluation" string="Evaluation" domain="[('minutes_type', '=', 'evaluation')]"/>
-                <filter name="filter_decision" string="Decision" domain="[('minutes_type', '=', 'decision')]"/>
-                <separator/>
-                <filter name="filter_this_month" string="This Month" domain="[('date', '&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
-                <group expand="0" string="Group By">
-                    <filter name="group_procedure" string="Procedure" context="{'group_by': 'procedure_id'}"/>
-                    <filter name="group_session" string="Session" context="{'group_by': 'session_id'}"/>
-                    <filter name="group_type" string="Type" context="{'group_by': 'minutes_type'}"/>
-                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
-                    <filter name="group_date" string="Date" context="{'group_by': 'date:month'}"/>
-                </group>
-            </search>
         </field>
     </record>
 
     <!-- Procurement Minutes Action -->
     <record id="action_procurement_minutes" model="ir.actions.act_window">
-        <field name="name">Session Minutes</field>
+        <field name="name">Minutes</field>
         <field name="res_model">procurement.minutes</field>
         <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="view_procurement_minutes_search"/>
-        <field name="context">{'search_default_filter_draft': 1}</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Create a new session minutes
-            </p>
-            <p>
-                Minutes document all discussions, decisions, and attendees of procurement sessions.
-            </p>
-        </field>
     </record>
 </odoo>
