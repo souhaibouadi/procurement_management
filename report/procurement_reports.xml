@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Procurement Procedure Report -->
+    <record id="action_report_procurement_procedure" model="ir.actions.report">
+        <field name="name">Procurement Procedure Report</field>
+        <field name="model">procurement.procedure</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_procurement_procedure</field>
+        <field name="report_file">procurement_management.report_procurement_procedure</field>
+        <field name="binding_model_id" ref="model_procurement_procedure"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Procurement Notice Report -->
+    <record id="action_report_procurement_notice" model="ir.actions.report">
+        <field name="name">Procurement Notice</field>
+        <field name="model">procurement.notice</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_procurement_notice</field>
+        <field name="report_file">procurement_management.report_procurement_notice</field>
+        <field name="binding_model_id" ref="model_procurement_notice"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Session Minutes Report -->
+    <record id="action_report_session_minutes" model="ir.actions.report">
+        <field name="name">Session Minutes</field>
+        <field name="model">procurement.minutes</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_session_minutes</field>
+        <field name="report_file">procurement_management.report_session_minutes</field>
+        <field name="binding_model_id" ref="model_procurement_minutes"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Award Decision Report -->
+    <record id="action_report_award_decision" model="ir.actions.report">
+        <field name="name">Award Decision</field>
+        <field name="model">procurement.award</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_award_decision</field>
+        <field name="report_file">procurement_management.report_award_decision</field>
+        <field name="binding_model_id" ref="model_procurement_award"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Order Letter Report -->
+    <record id="action_report_order_letter" model="ir.actions.report">
+        <field name="name">Order Letter</field>
+        <field name="model">procurement.order.letter</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_order_letter</field>
+        <field name="report_file">procurement_management.report_order_letter</field>
+        <field name="binding_model_id" ref="model_procurement_order_letter"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Summons Report -->
+    <record id="action_report_summons" model="ir.actions.report">
+        <field name="name">Summons</field>
+        <field name="model">procurement.summons</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_summons</field>
+        <field name="report_file">procurement_management.report_summons</field>
+        <field name="binding_model_id" ref="model_procurement_summons"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Evaluation Report -->
+    <record id="action_report_evaluation" model="ir.actions.report">
+        <field name="name">Evaluation Report</field>
+        <field name="model">procurement.evaluation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_evaluation</field>
+        <field name="report_file">procurement_management.report_evaluation</field>
+        <field name="binding_model_id" ref="model_procurement_evaluation"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
