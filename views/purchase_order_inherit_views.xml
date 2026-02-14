@@ -72,9 +72,9 @@
                     <group>
                         <group string="Supplier Qualification">
                             <field name="is_procurement_supplier"/>
-                            <field name="supplier_registration_number" attrs="{'invisible': [('is_procurement_supplier', '=', False)]}"/>
-                            <field name="supplier_qualification_date" attrs="{'invisible': [('is_procurement_supplier', '=', False)]}"/>
-                            <field name="supplier_qualification_expiry" attrs="{'invisible': [('is_procurement_supplier', '=', False)]}"/>
+                            <field name="supplier_registration_number" invisible="not is_procurement_supplier"/>
+                            <field name="supplier_qualification_date" invisible="not is_procurement_supplier"/>
+                            <field name="supplier_qualification_expiry" invisible="not is_procurement_supplier"/>
                         </group>
                         <group string="Business Information">
                             <field name="fiscal_id"/>
@@ -83,7 +83,7 @@
                             <field name="casnos_number"/>
                         </group>
                     </group>
-                    <group string="Procurement Statistics" attrs="{'invisible': [('is_procurement_supplier', '=', False)]}">
+                    <group string="Procurement Statistics" invisible="not is_procurement_supplier">
                         <field name="procurement_bid_count"/>
                         <field name="procurement_award_count"/>
                         <field name="procurement_contract_count"/>
