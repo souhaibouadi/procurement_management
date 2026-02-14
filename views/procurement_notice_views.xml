@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Notice Form View -->
+    <record id="view_procurement_notice_form" model="ir.ui.view">
+        <field name="name">procurement.notice.form</field>
+        <field name="model">procurement.notice</field>
+        <field name="arch" type="xml">
+            <form string="Procurement Notice">
+                <header>
+                    <button name="action_publish" string="Publish" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_cancel" string="Cancel" type="object" class="btn-danger" invisible="state == 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,published"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Notice Information">
+                            <field name="name"/>
+                            <field name="notice_reference"/>
+                            <field name="procedure_id"/>
+                            <field name="notice_type"/>
+                            <field name="tender_subtype" invisible="notice_type not in ('tender_call', 'candidacy_call')"/>
+                            <field name="language"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="bomop_publication_date"/>
+                            <field name="preparation_days"/>
+                            <field name="submission_time_limit"/>
+                            <field name="appeal_delay_days"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Content">
+                            <group>
+                                <field name="contract_subject"/>
+                                <field name="eligibility_conditions"/>
+                                <field name="professional_capacity"/>
+                                <field name="financial_capacity"/>
+                                <field name="technical_capacity"/>
+                            </group>
+                        </page>
+                        <page string="Submission">
+                            <group>
+                                <field name="specs_price"/>
+                                <field name="submission_composition"/>
+                                <field name="outer_envelope_label"/>
+                                <field name="commitment_duration"/>
+                                <field name="appeal_address"/>
+                            </group>
+                        </page>
+                        <page string="Publications">
+                            <field name="journal_line_ids">
+                                <tree editable="bottom">
+                                    <field name="journal_name"/>
+                                    <field name="publication_date"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Notice Tree View -->
+    <record id="view_procurement_notice_tree" model="ir.ui.view">
+        <field name="name">procurement.notice.tree</field>
+        <field name="model">procurement.notice</field>
+        <field name="arch" type="xml">
+            <tree string="Notices">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="notice_type"/>
+                <field name="bomop_publication_date"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Notice Action -->
+    <record id="action_procurement_notice" model="ir.actions.act_window">
+        <field name="name">Notices</field>
+        <field name="res_model">procurement.notice</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new notice</p>
+        </field>
+    </record>
+
+</odoo>
