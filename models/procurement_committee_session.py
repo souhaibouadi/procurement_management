@@ -22,6 +22,18 @@ class ProcurementCommitteeSession(models.Model):
         ('closed', 'Closed'),
     ], string="Status", default='draft')
 
+    def action_summon(self):
+        """Send summons to committee members"""
+        self.write({'state': 'summoned'})
+
+    def action_hold(self):
+        """Mark session as held"""
+        self.write({'state': 'held'})
+
+    def action_close(self):
+        """Close the session"""
+        self.write({'state': 'closed'})
+
 
 class ProcurementSessionAgenda(models.Model):
     _name = 'procurement.session.agenda'
