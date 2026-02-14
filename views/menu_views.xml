@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_procurement_root" name="Procurement" sequence="10" web_icon="procurement_management,static/description/icon.png"/>
+
+    <!-- Procedures Menu -->
+    <menuitem id="menu_procurement_procedures" name="Procedures" parent="menu_procurement_root" sequence="10"/>
+    <menuitem id="menu_action_procurement_procedure" name="All Procedures" parent="menu_procurement_procedures" action="action_procurement_procedure" sequence="10"/>
+
+    <!-- Committees Menu -->
+    <menuitem id="menu_procurement_committees" name="Committees" parent="menu_procurement_root" sequence="20"/>
+    <menuitem id="menu_action_committee" name="Committees" parent="menu_procurement_committees" action="action_procurement_committee" sequence="10"/>
+    <menuitem id="menu_action_session" name="Sessions" parent="menu_procurement_committees" action="action_procurement_session" sequence="20"/>
+    <menuitem id="menu_action_summons" name="Summons" parent="menu_procurement_committees" action="action_procurement_summons" sequence="30"/>
+
+    <!-- Publication Menu -->
+    <menuitem id="menu_procurement_publication" name="Publication" parent="menu_procurement_root" sequence="30"/>
+    <menuitem id="menu_action_notice" name="Notices" parent="menu_procurement_publication" action="action_procurement_notice" sequence="10"/>
+    <menuitem id="menu_action_publication" name="Publications" parent="menu_procurement_publication" action="action_procurement_publication" sequence="20"/>
+
+    <!-- Bidding Menu -->
+    <menuitem id="menu_procurement_bidding" name="Bidding" parent="menu_procurement_root" sequence="40"/>
+    <menuitem id="menu_action_specs_withdrawal" name="Specs Withdrawals" parent="menu_procurement_bidding" action="action_procurement_specs_withdrawal" sequence="10"/>
+    <menuitem id="menu_action_bid_deposit" name="Bid Deposits" parent="menu_procurement_bidding" action="action_procurement_bid_deposit" sequence="20"/>
+    <menuitem id="menu_action_bidder" name="Bidders" parent="menu_procurement_bidding" action="action_procurement_bidder" sequence="30"/>
+
+    <!-- Evaluation Menu -->
+    <menuitem id="menu_procurement_evaluation" name="Evaluation" parent="menu_procurement_root" sequence="50"/>
+    <menuitem id="menu_action_envelope_opening" name="Envelope Openings" parent="menu_procurement_evaluation" action="action_procurement_envelope_opening" sequence="10"/>
+    <menuitem id="menu_action_evaluation" name="Evaluations" parent="menu_procurement_evaluation" action="action_procurement_evaluation" sequence="20"/>
+
+    <!-- Decisions Menu -->
+    <menuitem id="menu_procurement_decisions" name="Decisions" parent="menu_procurement_root" sequence="60"/>
+    <menuitem id="menu_action_decision" name="Decisions" parent="menu_procurement_decisions" action="action_procurement_decision" sequence="10"/>
+    <menuitem id="menu_action_award" name="Awards" parent="menu_procurement_decisions" action="action_procurement_award" sequence="20"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_procurement_config" name="Configuration" parent="menu_procurement_root" sequence="100" groups="procurement_management.group_procurement_admin"/>
+
+</odoo>
