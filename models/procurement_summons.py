@@ -14,6 +14,7 @@ class ProcurementSummons(models.Model):
     role = fields.Char(string="Role in Committee", help="Vice-President, Secretary, Member, etc.")
     organization = fields.Char(string="Affiliated Organization", help="e.g. DECC, DAG, DOF, CNR, FNPOS, CA, etc.")
     send_date = fields.Date(string="Sending Date")
+    received_date = fields.Date(string="Received Date")
     meeting_datetime = fields.Datetime(string="Meeting Date & Time")
     meeting_location = fields.Char(string="Meeting Location")
     subject = fields.Char(string="Summons Subject")
