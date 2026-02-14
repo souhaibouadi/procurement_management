@@ -18,12 +18,26 @@
                             <field name="decision_date"/>
                         </group>
                         <group>
-                            <field name="decision_reference"/>
-                            <field name="signed_by"/>
+                            <field name="committee_id"/>
+                            <field name="signatory_id"/>
+                            <field name="effective_date"/>
                         </group>
                     </group>
-                    <group string="Content">
-                        <field name="content" nolabel="1"/>
+                    <group string="Legal References">
+                        <field name="legal_references" nolabel="1"/>
+                    </group>
+                    <group string="Decision Body">
+                        <field name="decision_body" nolabel="1"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="reporter_id"/>
+                            <field name="session_reference"/>
+                        </group>
+                        <group>
+                            <field name="minutes_reference"/>
+                            <field name="appointment_decision_ref"/>
+                        </group>
                     </group>
                 </sheet>
             </form>
@@ -36,10 +50,10 @@
         <field name="arch" type="xml">
             <tree string="Decisions">
                 <field name="name"/>
-                <field name="procedure_id"/>
                 <field name="decision_type"/>
+                <field name="procedure_id"/>
                 <field name="decision_date"/>
-                <field name="state" widget="badge"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -50,4 +64,5 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <menuitem id="menu_procurement_decision" name="Decisions" parent="menu_procurement_root" action="action_procurement_decision" sequence="90"/>
 </odoo>
