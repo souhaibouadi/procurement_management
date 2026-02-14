@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_procurement_specs_withdrawal_form" model="ir.ui.view">
+        <field name="name">procurement.specs.withdrawal.form</field>
+        <field name="model">procurement.specs.withdrawal</field>
+        <field name="arch" type="xml">
+            <form string="Specifications Withdrawal">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="procedure_id"/>
+                            <field name="partner_id"/>
+                            <field name="withdrawal_date"/>
+                        </group>
+                        <group>
+                            <field name="receipt_number"/>
+                            <field name="amount_paid"/>
+                            <field name="payment_receipt_ref"/>
+                        </group>
+                    </group>
+                    <group string="Withdrawer Information">
+                        <field name="withdrawer_name"/>
+                        <field name="withdrawer_function"/>
+                        <field name="phone"/>
+                        <field name="email"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_procurement_specs_withdrawal_tree" model="ir.ui.view">
+        <field name="name">procurement.specs.withdrawal.tree</field>
+        <field name="model">procurement.specs.withdrawal</field>
+        <field name="arch" type="xml">
+            <tree string="Specifications Withdrawals">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="partner_id"/>
+                <field name="withdrawal_date"/>
+                <field name="amount_paid" sum="Total"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_procurement_specs_withdrawal" model="ir.actions.act_window">
+        <field name="name">Specifications Withdrawals</field>
+        <field name="res_model">procurement.specs.withdrawal</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
