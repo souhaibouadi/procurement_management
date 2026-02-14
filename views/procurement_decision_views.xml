@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_procurement_decision_form" model="ir.ui.view">
+        <field name="name">procurement.decision.form</field>
+        <field name="model">procurement.decision</field>
+        <field name="arch" type="xml">
+            <form string="Decision">
+                <header>
+                    <button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="procedure_id"/>
+                            <field name="decision_type"/>
+                            <field name="decision_date"/>
+                        </group>
+                        <group>
+                            <field name="decision_reference"/>
+                            <field name="signed_by"/>
+                        </group>
+                    </group>
+                    <group string="Content">
+                        <field name="content" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_procurement_decision_tree" model="ir.ui.view">
+        <field name="name">procurement.decision.tree</field>
+        <field name="model">procurement.decision</field>
+        <field name="arch" type="xml">
+            <tree string="Decisions">
+                <field name="name"/>
+                <field name="procedure_id"/>
+                <field name="decision_type"/>
+                <field name="decision_date"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_procurement_decision" model="ir.actions.act_window">
+        <field name="name">Decisions</field>
+        <field name="res_model">procurement.decision</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
