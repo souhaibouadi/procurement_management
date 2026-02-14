@@ -47,8 +47,8 @@ class WizardScoreEvaluation(models.TransientModel):
         store=True,
         readonly=False
     )
-    criteria_ids = fields.One2many(
-        related='evaluation_id.criteria_ids',
+    criterion_ids = fields.One2many(
+        related='evaluation_id.criterion_ids',
         string='Criteria'
     )
     total_bidders = fields.Integer(
