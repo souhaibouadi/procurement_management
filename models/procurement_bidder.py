@@ -39,3 +39,18 @@ class ProcurementBidder(models.Model):
     def _compute_total_score(self):
         for rec in self:
             rec.total_score = rec.technical_score + rec.financial_score
+
+
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('submitted', 'Submitted'),
+        ('qualified', 'Qualified'),
+        ('awarded', 'Awarded'),
+        ('rejected', 'Rejected'),
+    ], string="State", default='draft')
+    registration_date = fields.Date(string="Registration Date")
+    bid_amount = fields.Float(string="Bid Amount")
+    discount_percentage = fields.Float(string="Discount Percentage")
+    final_amount = fields.Float(string="Final Amount")
+    document_ids = fields.Many2many('ir.attachment', string="Documents")
+    notes = fields.Text(string="Notes")
