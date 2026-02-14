@@ -7,6 +7,7 @@ class ProcurementAward(models.Model):
     _name = 'procurement.award'
     _description = 'Procurement Award'
 
+    name = fields.Char(string="Reference", required=True)
     procedure_id = fields.Many2one('procurement.procedure', string="Procedure")
     award_type = fields.Selection([
         ('provisional', 'Provisional Award'),
