@@ -5,7 +5,7 @@
         <!-- Default Committee Types -->
         <record id="committee_type_opening" model="procurement.committee">
             <field name="name">Envelope Opening and Evaluation Committee (COEP)</field>
-            <field name="committee_type">opening_evaluation</field>
+            <field name="committee_type">tender_eval</field>
         </record>
 
         <record id="committee_type_market" model="procurement.committee">
