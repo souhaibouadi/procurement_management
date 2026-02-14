@@ -23,3 +23,4 @@ class ProcurementCommittee(models.Model):
     appointment_decision_ref = fields.Char(string="Ministerial Appointment Decision Reference")
     appointment_date = fields.Date(string="Appointment Date")
     active = fields.Boolean(default=True)
+    company_id = fields.Many2one('res.company', string="Company", default=lambda self: self.env.company)
