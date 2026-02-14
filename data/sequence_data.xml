@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Procurement Procedure Sequence -->
+        <record id="seq_procurement_procedure" model="ir.sequence">
+            <field name="name">Procurement Procedure</field>
+            <field name="code">procurement.procedure</field>
+            <field name="prefix">PROC/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Committee Session Sequence -->
+        <record id="seq_committee_session" model="ir.sequence">
+            <field name="name">Committee Session</field>
+            <field name="code">procurement.committee.session</field>
+            <field name="prefix">SESS/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Procurement Notice Sequence -->
+        <record id="seq_procurement_notice" model="ir.sequence">
+            <field name="name">Procurement Notice</field>
+            <field name="code">procurement.notice</field>
+            <field name="prefix">NOT/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Publication Sequence -->
+        <record id="seq_procurement_publication" model="ir.sequence">
+            <field name="name">Procurement Publication</field>
+            <field name="code">procurement.publication</field>
+            <field name="prefix">PUB/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Bid Deposit Sequence -->
+        <record id="seq_bid_deposit" model="ir.sequence">
+            <field name="name">Bid Deposit</field>
+            <field name="code">procurement.bid.deposit</field>
+            <field name="prefix">BID/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Evaluation Sequence -->
+        <record id="seq_procurement_evaluation" model="ir.sequence">
+            <field name="name">Procurement Evaluation</field>
+            <field name="code">procurement.evaluation</field>
+            <field name="prefix">EVAL/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Decision Sequence -->
+        <record id="seq_procurement_decision" model="ir.sequence">
+            <field name="name">Procurement Decision</field>
+            <field name="code">procurement.decision</field>
+            <field name="prefix">DEC/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Award Sequence -->
+        <record id="seq_procurement_award" model="ir.sequence">
+            <field name="name">Procurement Award</field>
+            <field name="code">procurement.award</field>
+            <field name="prefix">AWD/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Minutes Sequence -->
+        <record id="seq_procurement_minutes" model="ir.sequence">
+            <field name="name">Procurement Minutes</field>
+            <field name="code">procurement.minutes</field>
+            <field name="prefix">MIN/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Service Order Sequence -->
+        <record id="seq_service_order" model="ir.sequence">
+            <field name="name">Service Order</field>
+            <field name="code">procurement.service.order</field>
+            <field name="prefix">SO/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Order Letter Sequence -->
+        <record id="seq_order_letter" model="ir.sequence">
+            <field name="name">Order Letter</field>
+            <field name="code">procurement.order.letter</field>
+            <field name="prefix">OL/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Summons Sequence -->
+        <record id="seq_procurement_summons" model="ir.sequence">
+            <field name="name">Procurement Summons</field>
+            <field name="code">procurement.summons</field>
+            <field name="prefix">SUM/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
