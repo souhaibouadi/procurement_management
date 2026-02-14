@@ -24,3 +24,11 @@ class ProcurementSummons(models.Model):
         ('sent', 'Sent'),
         ('confirmed', 'Confirmed'),
     ], string="Status", default='draft')
+
+    def action_send(self):
+        """Send the summons"""
+        self.write({'state': 'sent'})
+
+    def action_confirm_receipt(self):
+        """Confirm receipt of summons"""
+        self.write({'state': 'confirmed'})
