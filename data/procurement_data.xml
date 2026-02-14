@@ -37,11 +37,8 @@
             <field name="auto_delete" eval="True"/>
         </record>
 
-        <!-- Publication Media Types -->
-        <record id="publication_bomop" model="procurement.publication">
-            <field name="name">BOMOP Publication Template</field>
-            <field name="media_type">bomop</field>
-        </record>
 
+    </data>
+</odoo>
     </data>
 </odoo>
