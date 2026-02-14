@@ -19,11 +19,35 @@
                             <field name="award_date"/>
                         </group>
                         <group>
-                            <field name="awarded_bidder_id"/>
-                            <field name="awarded_amount"/>
-                            <field name="appeal_deadline"/>
+                            <field name="bidder_id"/>
+                            <field name="award_amount_excl_tax"/>
+                            <field name="award_amount_incl_tax"/>
+                            <field name="appeal_end_date"/>
                         </group>
                     </group>
+                    <group string="Award Details">
+                        <group>
+                            <field name="designation"/>
+                            <field name="obtained_score"/>
+                            <field name="ranking_label"/>
+                        </group>
+                        <group>
+                            <field name="execution_delay"/>
+                            <field name="appeal_start_date"/>
+                            <field name="notice_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Appeals">
+                            <field name="appeal_ids">
+                                <tree>
+                                    <field name="bidder_id"/>
+                                    <field name="appeal_date"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -37,8 +61,8 @@
                 <field name="name"/>
                 <field name="procedure_id"/>
                 <field name="award_type"/>
-                <field name="awarded_bidder_id"/>
-                <field name="awarded_amount"/>
+                <field name="bidder_id"/>
+                <field name="award_amount_excl_tax"/>
                 <field name="state" widget="badge"/>
             </tree>
         </field>
@@ -49,5 +73,4 @@
         <field name="res_model">procurement.award</field>
         <field name="view_mode">tree,form</field>
     </record>
-
 </odoo>
