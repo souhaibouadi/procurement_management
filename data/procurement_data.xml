@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Default Committee Types -->
+        <record id="committee_type_opening" model="procurement.committee">
+            <field name="name">Envelope Opening and Evaluation Committee (COEP)</field>
+            <field name="committee_type">opening_evaluation</field>
+        </record>
+
+        <record id="committee_type_market" model="procurement.committee">
+            <field name="name">Market Committee</field>
+            <field name="committee_type">market</field>
+        </record>
+
+        <!-- Mail Templates -->
+        <record id="mail_template_summons" model="mail.template">
+            <field name="name">Procurement: Committee Summons</field>
+            <field name="model_id" ref="model_procurement_summons"/>
+            <field name="subject">Summons - Committee Session {{ object.session_id.name or '' }}</field>
+            <field name="body_html"><![CDATA[
+<div style="margin: 0px; padding: 0px;">
+    <p>Dear {{ object.member_id.name }},</p>
+    <p>You are hereby summoned to attend the committee session:</p>
+    <ul>
+        <li><strong>Session:</strong> {{ object.session_id.name }}</li>
+        <li><strong>Date:</strong> {{ object.session_id.session_date }}</li>
+        <li><strong>Location:</strong> {{ object.session_id.location or 'TBD' }}</li>
+        <li><strong>Procedure:</strong> {{ object.session_id.procedure_id.name }}</li>
+    </ul>
+    <p>Your attendance is mandatory.</p>
+    <p>Best regards,</p>
+</div>
+]]></field>
+            <field name="email_from">{{ (object.company_id.email or user.email) }}</field>
+            <field name="email_to">{{ object.member_id.email }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Publication Media Types -->
+        <record id="publication_bomop" model="procurement.publication">
+            <field name="name">BOMOP Publication Template</field>
+            <field name="media_type">bomop</field>
+        </record>
+
+    </data>
+</odoo>
