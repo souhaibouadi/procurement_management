@@ -19,3 +19,4 @@ from . import procurement_service_order
 from . import procurement_order_letter
 from . import procurement_document
 from . import purchase_order_inherit
+from . import res_partner_inherit
