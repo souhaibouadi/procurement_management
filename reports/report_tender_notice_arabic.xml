@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_tender_notice_arabic" model="ir.actions.report">
+        <field name="name">Tender Call Notice (Arabic)</field>
+        <field name="model">procurement.notice</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_tender_notice_arabic_document</field>
+        <field name="report_file">procurement_management.report_tender_notice_arabic_document</field>
+        <field name="binding_model_id" ref="model_procurement_notice"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_tender_notice_arabic_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" dir="rtl" style="direction: rtl; text-align: right;">
+                        <h2 class="text-center">&#1573;&#1593;&#1604;&#1575;&#1606; &#1593;&#1606; &#1605;&#1606;&#1575;&#1602;&#1589;&#1577;</h2>
+                        <h4 class="text-center" t-if="doc.notice_reference">
+                            &#1575;&#1604;&#1605;&#1585;&#1580;&#1593;: <span t-field="doc.notice_reference"/>
+                        </h4>
+                        <br/>
+                        <p><strong>&#1575;&#1604;&#1580;&#1605;&#1607;&#1608;&#1585;&#1610;&#1577; &#1575;&#1604;&#1580;&#1586;&#1575;&#1574;&#1585;&#1610;&#1577; &#1575;&#1604;&#1583;&#1610;&#1605;&#1602;&#1585;&#1575;&#1591;&#1610;&#1577; &#1575;&#1604;&#1588;&#1593;&#1576;&#1610;&#1577;</strong></p>
+                        <hr/>
+                        <p><strong>&#1575;&#1604;&#1605;&#1608;&#1590;&#1608;&#1593;:</strong></p>
+                        <p t-field="doc.contract_subject"/>
+                        <div t-if="doc.eligibility_conditions">
+                            <p><strong>&#1588;&#1585;&#1608;&#1591; &#1575;&#1604;&#1571;&#1607;&#1604;&#1610;&#1577;:</strong></p>
+                            <p t-field="doc.eligibility_conditions"/>
+                        </div>
+                        <div t-if="doc.professional_capacity">
+                            <p><strong>&#1575;&#1604;&#1602;&#1583;&#1585;&#1575;&#1578; &#1575;&#1604;&#1605;&#1607;&#1606;&#1610;&#1577;:</strong></p>
+                            <p t-field="doc.professional_capacity"/>
+                        </div>
+                        <div t-if="doc.financial_capacity">
+                            <p><strong>&#1575;&#1604;&#1602;&#1583;&#1585;&#1575;&#1578; &#1575;&#1604;&#1605;&#1575;&#1604;&#1610;&#1577;:</strong></p>
+                            <p t-field="doc.financial_capacity"/>
+                        </div>
+                        <div t-if="doc.technical_capacity">
+                            <p><strong>&#1575;&#1604;&#1602;&#1583;&#1585;&#1575;&#1578; &#1575;&#1604;&#1578;&#1602;&#1606;&#1610;&#1577;:</strong></p>
+                            <p t-field="doc.technical_capacity"/>
+                        </div>
+                        <p><strong>&#1579;&#1605;&#1606; &#1583;&#1601;&#1578;&#1585; &#1575;&#1604;&#1588;&#1585;&#1608;&#1591;:</strong> <span t-field="doc.specs_price"/> &#1583;.&#1580;</p>
+                        <p><strong>&#1605;&#1583;&#1577; &#1575;&#1604;&#1578;&#1581;&#1590;&#1610;&#1585;:</strong> <span t-field="doc.preparation_days"/> &#1610;&#1608;&#1605;</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
