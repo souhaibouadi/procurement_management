@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_specs_withdrawal_register" model="ir.actions.report">
+            <field name="name">Specs Withdrawal Register</field>
+            <field name="model">procurement.procedure</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">procurement_management.report_specs_withdrawal_register_document</field>
+            <field name="report_file">procurement_management.report_specs_withdrawal_register_document</field>
+            <field name="binding_model_id" ref="model_procurement_procedure"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_specs_withdrawal_register_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h3 class="text-center">SPECIFICATIONS WITHDRAWAL REGISTER</h3>
+                            <h4 class="text-center">(Registre des Retraits des Cahiers des Charges)</h4>
+                            <p><strong>Procedure:</strong> <span t-field="doc.name"/></p>
+                            <hr/>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Withdrawal Name</th>
+                                        <th>Partner</th>
+                                        <th>Withdrawn By</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Amount Paid (DZD)</th>
+                                        <th>Receipt No.</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.specs_withdrawal_ids" t-as="w">
+                                        <tr>
+                                            <td><span t-field="w.sequence"/></td>
+                                            <td><span t-field="w.name"/></td>
+                                            <td><span t-field="w.partner_id.name"/></td>
+                                            <td><span t-field="w.withdrawn_by"/></td>
+                                            <td><span t-field="w.withdrawal_date"/></td>
+                                            <td><span t-field="w.withdrawal_time"/></td>
+                                            <td><span t-field="w.amount_paid"/></td>
+                                            <td><span t-field="w.receipt_number"/></td>
+                                            <td><span t-field="w.phone"/></td>
+                                            <td><span t-field="w.email"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
