@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_provisional_award_notice_arabic" model="ir.actions.report">
+        <field name="name">Provisional Award Notice (Arabic)</field>
+        <field name="model">procurement.award</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_provisional_award_notice_arabic_document</field>
+        <field name="report_file">procurement_management.report_provisional_award_notice_arabic_document</field>
+        <field name="binding_model_id" ref="model_procurement_award"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_provisional_award_notice_arabic_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" dir="rtl" style="direction: rtl; text-align: right;">
+                        <h2 class="text-center">&#1573;&#1593;&#1604;&#1575;&#1606; &#1593;&#1606; &#1575;&#1604;&#1605;&#1606;&#1581; &#1575;&#1604;&#1605;&#1572;&#1602;&#1578;</h2>
+                        <h4 class="text-center" t-field="doc.name"/>
+                        <br/>
+                        <table class="table table-bordered">
+                            <thead><tr>
+                                <th>&#1575;&#1604;&#1578;&#1593;&#1610;&#1610;&#1606;</th>
+                                <th>&#1575;&#1604;&#1601;&#1575;&#1574;&#1586;</th>
+                                <th>&#1575;&#1604;&#1585;&#1602;&#1605; &#1575;&#1604;&#1580;&#1576;&#1575;&#1574;&#1610;</th>
+                                <th>&#1575;&#1604;&#1606;&#1602;&#1591;&#1577;</th>
+                                <th>&#1575;&#1604;&#1605;&#1576;&#1604;&#1594; (&#1583;.&#1580;)</th>
+                                <th>&#1575;&#1604;&#1571;&#1580;&#1604;</th>
+                            </tr></thead>
+                            <tbody><tr>
+                                <td t-field="doc.designation"/>
+                                <td t-field="doc.bidder_id.partner_id.name"/>
+                                <td t-field="doc.bidder_id.tax_id_number"/>
+                                <td t-field="doc.obtained_score"/>
+                                <td t-field="doc.award_amount_incl_tax"/>
+                                <td t-field="doc.execution_delay"/>
+                            </tr></tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
