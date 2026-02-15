@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_summons" model="ir.actions.report">
+        <field name="name">Committee Summons</field>
+        <field name="model">procurement.summons</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_summons_document</field>
+        <field name="report_file">procurement_management.report_summons_document</field>
+        <field name="binding_model_id" ref="model_procurement_summons"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_summons_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h3 class="text-center">COMMITTEE SUMMONS</h3>
+                        <p t-if="doc.name"><strong>Reference:</strong> <span t-field="doc.name"/></p>
+                        <hr/>
+                        <p><strong>To:</strong> <span t-field="doc.recipient_id.name"/></p>
+                        <p t-if="doc.role"><strong>Role:</strong> <span t-field="doc.role"/></p>
+                        <p t-if="doc.organization"><strong>Organization:</strong> <span t-field="doc.organization"/></p>
+                        <br/>
+                        <p>You are hereby summoned to attend the committee meeting:</p>
+                        <p><strong>Date:</strong> <span t-field="doc.meeting_datetime"/></p>
+                        <p><strong>Location:</strong> <span t-field="doc.meeting_location"/></p>
+                        <p t-if="doc.subject"><strong>Subject:</strong> <span t-field="doc.subject"/></p>
+                        <div t-if="doc.agenda">
+                            <p><strong>Agenda:</strong></p>
+                            <p t-field="doc.agenda"/>
+                        </div>
+                        <br/>
+                        <div class="mt-5 text-right">
+                            <p t-if="doc.signatory_id"><span t-field="doc.signatory_id.name"/></p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
