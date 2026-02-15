@@ -32,12 +32,12 @@
                         </field>
                     </page>
                     <page string="Criteria" name="criteria">
-                        <field name="criteria_ids">
+                        <field name="criterion_ids" readonly="1">
                             <tree>
-                                <field name="criteria_name"/>
-                                <field name="criteria_type"/>
+                                <field name="criterion_name"/>
+                                <field name="description"/>
                                 <field name="max_score"/>
-                                <field name="weight"/>
+                                <field name="sequence"/>
                             </tree>
                         </field>
                     </page>
@@ -56,7 +56,7 @@
                 </group>
                 <footer>
                     <button name="action_calculate_scores" string="Calculate Scores" type="object" class="btn-primary"/>
-                    <button name="action_apply_selection" string="Apply Selection" type="object" class="btn-success" attrs="{'invisible': [('auto_calculate', '=', True)]}"/>
+                    <button name="action_apply_selection" string="Apply Selection" type="object" class="btn-success" invisible="auto_calculate"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
