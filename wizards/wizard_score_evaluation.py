@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
@@ -80,8 +79,8 @@ class WizardScoreEvaluation(models.TransientModel):
     def _compute_bidder_ids(self):
         for wizard in self:
             lines = []
-            if wizard.evaluation_id:
-                for bidder in wizard.evaluation_id.bidder_ids:
+            if wizard.evaluation_id and wizard.evaluation_id.procedure_id:
+                for bidder in wizard.evaluation_id.procedure_id.bidder_ids:
                     lines.append((0, 0, {
                         'bidder_id': bidder.id,
                         'technical_score': bidder.technical_score,
@@ -108,23 +107,26 @@ class WizardScoreEvaluation(models.TransientModel):
                 line.combined_score = (line.technical_score * 0.7) + (line.financial_score * 0.3)
             else:
                 line.combined_score = (line.technical_score + line.financial_score) / 2
-        
+
         # Update ranks
         sorted_lines = self.bidder_ids.sorted(key=lambda x: x.combined_score, reverse=True)
         for rank, line in enumerate(sorted_lines, 1):
             line.rank = rank
-        
+
         return {'type': 'ir.actions.act_window_close'}
 
     def action_apply_selection(self):
         self.ensure_one()
         for line in self.bidder_ids:
             if line.bidder_id:
-                line.bidder_id.write({
+                vals = {
                     'technical_score': line.technical_score,
                     'financial_score': line.financial_score,
-                    'is_qualified': line.is_selected,
-                })
+                    'ranking': line.rank,
+                }
+                if line.is_selected:
+                    vals['bidder_state'] = 'retained'
+                line.bidder_id.write(vals)
         return {'type': 'ir.actions.act_window_close'}
 
 
