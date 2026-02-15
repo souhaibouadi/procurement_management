@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_order_letter" model="ir.actions.report">
+            <field name="name">Order Letter</field>
+            <field name="model">procurement.order.letter</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">procurement_management.report_order_letter_document</field>
+            <field name="report_file">procurement_management.report_order_letter_document</field>
+            <field name="binding_model_id" ref="model_procurement_order_letter"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_order_letter_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h3 class="text-center">ORDER LETTER (LETTRE DE COMMANDE)</h3>
+                            <p><strong>Reference:</strong> <span t-field="doc.name"/></p>
+                            <p><strong>Date:</strong> <span t-field="doc.letter_date"/></p>
+                            <p><strong>Procedure:</strong> <span t-field="doc.procedure_id.name"/></p>
+                            <p><strong>Contract Reference:</strong> <span t-field="doc.contract_reference"/></p>
+                            <hr/>
+                            <p><strong>To:</strong> <span t-field="doc.recipient_id.name"/></p>
+                            <div t-if="doc.letter_subject">
+                                <h5>Subject</h5>
+                                <p t-field="doc.letter_subject"/>
+                            </div>
+                            <div t-if="doc.service_line_ids">
+                                <h5>Service Lines</h5>
+                                <table class="table table-sm table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Quantity</th>
+                                            <th>Unit Price</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="doc.service_line_ids" t-as="line">
+                                            <tr>
+                                                <td><span t-field="line.description"/></td>
+                                                <td><span t-field="line.quantity"/></td>
+                                                <td><span t-field="line.unit_price"/></td>
+                                                <td><span t-field="line.amount"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br/>
+                            <div class="row mt-5">
+                                <div class="col-6">
+                                    <p><strong>The Recipient</strong></p>
+                                    <p t-field="doc.recipient_id.name"/>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <p><strong>The Signatory</strong></p>
+                                    <p t-if="doc.signatory_id"><span t-field="doc.signatory_id.name"/></p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
