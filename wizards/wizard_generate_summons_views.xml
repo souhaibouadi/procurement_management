@@ -38,7 +38,7 @@
         <field name="res_model">procurement.wizard.generate.summons</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="binding_model_id" ref="procurement_management.model_procurement_session"/>
+        <field name="binding_model_id" ref="procurement_management.model_procurement_committee_session"/>
         <field name="binding_view_types">form</field>
     </record>
 </odoo>
