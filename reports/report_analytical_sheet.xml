@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_analytical_sheet" model="ir.actions.report">
+            <field name="name">Analytical Sheet for Award</field>
+            <field name="model">procurement.analytical.sheet</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">procurement_management.report_analytical_sheet_document</field>
+            <field name="report_file">procurement_management.report_analytical_sheet_document</field>
+            <field name="binding_model_id" ref="model_procurement_analytical_sheet"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_analytical_sheet_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h3 class="text-center">ANALYTICAL SHEET FOR AWARD</h3>
+                            <h4 class="text-center">(Fiche Analytique de la Commande)</h4>
+                            <p><strong>Reference:</strong> <span t-field="doc.name"/></p>
+                            <p><strong>Procedure:</strong> <span t-field="doc.procedure_id.name"/></p>
+                            <p><strong>Session Date:</strong> <span t-field="doc.session_date"/></p>
+                            <p><strong>Committee Session Ref:</strong> <span t-field="doc.committee_session_ref"/></p>
+                            <hr/>
+                            <h5>General Information</h5>
+                            <p><strong>Contracting Authority:</strong> <span t-field="doc.contracting_authority"/></p>
+                            <p><strong>Contractor:</strong> <span t-field="doc.contractor_partner_id.name"/></p>
+                            <p><strong>Contract Subject:</strong> <span t-field="doc.contract_subject"/></p>
+                            <p><strong>Procurement Method:</strong> <span t-field="doc.procurement_method"/></p>
+                            <div t-if="doc.legal_basis">
+                                <p><strong>Legal Basis:</strong> <span t-field="doc.legal_basis"/></p>
+                            </div>
+                            <hr/>
+                            <h5>Financial Details</h5>
+                            <p><strong>Amount Excl. Tax:</strong> <span t-field="doc.amount_excl_tax"/> DZD (<span t-field="doc.amount_excl_tax_words"/>)</p>
+                            <p><strong>Amount Incl. Tax:</strong> <span t-field="doc.amount_incl_tax"/> DZD (<span t-field="doc.amount_incl_tax_words"/>)</p>
+                            <p><strong>Allocated Budget:</strong> <span t-field="doc.allocated_budget"/> DZD</p>
+                            <p><strong>Administrative Estimate:</strong> <span t-field="doc.administrative_estimate"/> DZD</p>
+                            <hr/>
+                            <h5>Specifications &amp; Publication</h5>
+                            <p><strong>Specs Approval Ref:</strong> <span t-field="doc.specs_approval_ref"/></p>
+                            <p><strong>Specs Approval Date:</strong> <span t-field="doc.specs_approval_date"/></p>
+                            <p t-if="doc.publication_journals"><strong>Publication:</strong> <span t-field="doc.publication_journals"/></p>
+                            <p><strong>Preparation Duration:</strong> <span t-field="doc.preparation_days"/> days</p>
+                            <p><strong>Specs Withdrawn:</strong> <span t-field="doc.specs_withdrawn_count"/></p>
+                            <p><strong>Envelopes Received:</strong> <span t-field="doc.envelopes_received_count"/></p>
+                            <hr/>
+                            <h5>Evaluation Results</h5>
+                            <p t-if="doc.preliminary_exam_result"><strong>Preliminary Exam:</strong> <span t-field="doc.preliminary_exam_result"/></p>
+                            <p t-if="doc.retained_bidders"><strong>Retained Bidders:</strong> <span t-field="doc.retained_bidders"/></p>
+                            <p t-if="doc.excluded_bidders"><strong>Excluded Bidders:</strong> <span t-field="doc.excluded_bidders"/></p>
+                            <p t-if="doc.final_ranking"><strong>Final Ranking:</strong> <span t-field="doc.final_ranking"/></p>
+                            <p t-if="doc.provisional_awardee_id"><strong>Provisional Awardee:</strong> <span t-field="doc.provisional_awardee_id.name"/></p>
+                            <div t-if="doc.notes">
+                                <h5>Notes</h5>
+                                <p t-field="doc.notes"/>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
