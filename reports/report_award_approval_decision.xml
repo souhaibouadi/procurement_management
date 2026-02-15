@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_award_approval_decision" model="ir.actions.report">
+            <field name="name">Award Approval Decision</field>
+            <field name="model">procurement.decision</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">procurement_management.report_award_approval_decision_document</field>
+            <field name="report_file">procurement_management.report_award_approval_decision_document</field>
+            <field name="binding_model_id" ref="model_procurement_decision"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_award_approval_decision_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h3 class="text-center">AWARD APPROVAL DECISION</h3>
+                            <p><strong>Reference:</strong> <span t-field="doc.name"/></p>
+                            <p><strong>Date:</strong> <span t-field="doc.decision_date"/></p>
+                            <p><strong>Procedure:</strong> <span t-field="doc.procedure_id.name"/></p>
+                            <hr/>
+                            <div t-if="doc.legal_references">
+                                <h5>Legal References</h5>
+                                <p t-field="doc.legal_references"/>
+                            </div>
+                            <div t-if="doc.decision_body">
+                                <h5>Decision Body</h5>
+                                <p t-field="doc.decision_body"/>
+                            </div>
+                            <div t-if="doc.awarded_bidder_id">
+                                <br/>
+                                <h5>Awarded Bidder</h5>
+                                <p><span t-field="doc.awarded_bidder_id.name"/></p>
+                                <p t-if="doc.award_amount"><strong>Award Amount:</strong> <span t-field="doc.award_amount"/> DZD</p>
+                            </div>
+                            <br/>
+                            <div class="text-right mt-5">
+                                <p><strong>Approved by:</strong></p>
+                                <p t-if="doc.signatory_id"><span t-field="doc.signatory_id.name"/></p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
