@@ -29,9 +29,9 @@
                                 نأسف لإبلاغكم أن عرضكم المقدم في إطار إجراء الصفقة العمومية المذكور أعلاه
                                 لم يتم اختياره.
                             </p>
-                            <div t-if="doc.rejection_reason">
+                            <div t-if="doc.exclusion_reason">
                                 <p><strong>السبب:</strong></p>
-                                <p t-field="doc.rejection_reason"/>
+                                <p t-field="doc.exclusion_reason"/>
                             </div>
                             <p>
                                 وفقا للتنظيمات المعمول بها، يحق لكم تقديم طعن خلال
