@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_service_order" model="ir.actions.report">
+            <field name="name">Service Order (ODS)</field>
+            <field name="model">procurement.service.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">procurement_management.report_service_order_document</field>
+            <field name="report_file">procurement_management.report_service_order_document</field>
+            <field name="binding_model_id" ref="model_procurement_service_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_service_order_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h3 class="text-center">SERVICE ORDER (ORDRE DE SERVICE)</h3>
+                            <p><strong>Reference:</strong> <span t-field="doc.name"/></p>
+                            <p><strong>Procedure:</strong> <span t-field="doc.procedure_id.name"/></p>
+                            <p><strong>Contract Reference:</strong> <span t-field="doc.contract_reference"/></p>
+                            <p><strong>Contract Date:</strong> <span t-field="doc.contract_date"/></p>
+                            <hr/>
+                            <p><strong>Contractor:</strong> <span t-field="doc.contractor_id.name"/></p>
+                            <p><strong>Operation:</strong> <span t-field="doc.operation"/></p>
+                            <div t-if="doc.order_subject">
+                                <h5>Subject</h5>
+                                <p t-field="doc.order_subject"/>
+                            </div>
+                            <div t-if="doc.order_body">
+                                <h5>Content</h5>
+                                <p t-field="doc.order_body"/>
+                            </div>
+                            <p t-if="doc.execution_delay"><strong>Execution Delay:</strong> <span t-field="doc.execution_delay"/></p>
+                            <p t-if="doc.notification_date"><strong>Notification Date:</strong> <span t-field="doc.notification_date"/></p>
+                            <p t-if="doc.handover_date"><strong>Handover Date:</strong> <span t-field="doc.handover_date"/></p>
+                            <br/>
+                            <div class="row mt-5">
+                                <div class="col-6">
+                                    <p><strong>The Contractor</strong></p>
+                                    <p t-field="doc.contractor_id.name"/>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <p><strong>The Contracting Authority</strong></p>
+                                    <p t-if="doc.service_signatory_id"><span t-field="doc.service_signatory_id.name"/></p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
