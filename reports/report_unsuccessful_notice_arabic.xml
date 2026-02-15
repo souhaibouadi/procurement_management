@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_unsuccessful_notice_arabic" model="ir.actions.report">
+            <field name="name">Unsuccessful Bidder Notice (Arabic)</field>
+            <field name="model">procurement.bidder</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">procurement_management.report_unsuccessful_notice_arabic_document</field>
+            <field name="report_file">procurement_management.report_unsuccessful_notice_arabic_document</field>
+            <field name="binding_model_id" ref="model_procurement_bidder"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_unsuccessful_notice_arabic_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page" dir="rtl" style="text-align: right; font-family: 'Traditional Arabic', 'Arial', sans-serif;">
+                            <h3 class="text-center">إشعار بعدم القبول</h3>
+                            <br/>
+                            <p><strong>إلى:</strong> <span t-field="doc.partner_id.name"/></p>
+                            <p><strong>الإجراء:</strong> <span t-field="doc.procedure_id.name"/></p>
+                            <p><strong>التاريخ:</strong> <span t-esc="context_today().strftime('%Y-%m-%d')"/></p>
+                            <hr/>
+                            <p>
+                                <span t-field="doc.partner_id.name"/> السيد/ة
+                            </p>
+                            <p>
+                                نأسف لإبلاغكم أن عرضكم المقدم في إطار إجراء الصفقة العمومية المذكور أعلاه
+                                لم يتم اختياره.
+                            </p>
+                            <div t-if="doc.rejection_reason">
+                                <p><strong>السبب:</strong></p>
+                                <p t-field="doc.rejection_reason"/>
+                            </div>
+                            <p>
+                                وفقا للتنظيمات المعمول بها، يحق لكم تقديم طعن خلال
+                                المهلة القانونية المحددة.
+                            </p>
+                            <p>
+                                نشكركم على مشاركتكم واهتمامكم.
+                            </p>
+                            <br/>
+                            <div class="text-left mt-5">
+                                <p>المصلحة المتعاقدة</p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
