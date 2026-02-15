@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_tender_notice" model="ir.actions.report">
+        <field name="name">Tender Call Notice</field>
+        <field name="model">procurement.notice</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">procurement_management.report_tender_notice_document</field>
+        <field name="report_file">procurement_management.report_tender_notice_document</field>
+        <field name="binding_model_id" ref="model_procurement_notice"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_tender_notice_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">TENDER CALL NOTICE</h2>
+                        <h4 class="text-center" t-if="doc.notice_reference">
+                            Reference: <span t-field="doc.notice_reference"/>
+                        </h4>
+                        <br/>
+                        <div class="row">
+                            <div class="col-12">
+                                <p><strong>People's Democratic Republic of Algeria</strong></p>
+                                <p t-if="doc.procedure_id.contracting_authority_name">
+                                    <strong>Contracting Authority:</strong>
+                                    <span t-field="doc.procedure_id.contracting_authority_name"/>
+                                </p>
+                                <p t-if="doc.procedure_id.tax_id_number">
+                                    <strong>NIF:</strong>
+                                    <span t-field="doc.procedure_id.tax_id_number"/>
+                                </p>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <p><strong>Subject:</strong></p>
+                                <p t-field="doc.contract_subject"/>
+                            </div>
+                        </div>
+                        <div class="row mt-2" t-if="doc.eligibility_conditions">
+                            <div class="col-12">
+                                <p><strong>Eligibility Conditions:</strong></p>
+                                <p t-field="doc.eligibility_conditions"/>
+                            </div>
+                        </div>
+                        <div class="row mt-2" t-if="doc.professional_capacity">
+                            <div class="col-12">
+                                <p><strong>Professional Capacity Requirements:</strong></p>
+                                <p t-field="doc.professional_capacity"/>
+                            </div>
+                        </div>
+                        <div class="row mt-2" t-if="doc.financial_capacity">
+                            <div class="col-12">
+                                <p><strong>Financial Capacity Requirements:</strong></p>
+                                <p t-field="doc.financial_capacity"/>
+                            </div>
+                        </div>
+                        <div class="row mt-2" t-if="doc.technical_capacity">
+                            <div class="col-12">
+                                <p><strong>Technical Capacity Requirements:</strong></p>
+                                <p t-field="doc.technical_capacity"/>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <p><strong>Specifications Price:</strong>
+                                    <span t-field="doc.specs_price"/> DZD
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Preparation Duration:</strong>
+                                    <span t-field="doc.preparation_days"/> days
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mt-2" t-if="doc.submission_composition">
+                            <div class="col-12">
+                                <p><strong>Submission Composition:</strong></p>
+                                <p t-field="doc.submission_composition"/>
+                            </div>
+                        </div>
+                        <div class="row mt-2" t-if="doc.outer_envelope_label">
+                            <div class="col-12">
+                                <p><strong>Outer Envelope Label:</strong></p>
+                                <p t-field="doc.outer_envelope_label"/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <p><strong>Submission Deadline:</strong>
+                                    <span t-field="doc.submission_time_limit"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
