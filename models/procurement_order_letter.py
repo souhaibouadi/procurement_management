@@ -52,3 +52,11 @@ class ProcurementOrderLetterLine(models.Model):
     letter_id = fields.Many2one('procurement.order.letter', string="Order Letter")
     sequence = fields.Integer(string="Order Number")
     description = fields.Text(string="Service Description")
+    quantity = fields.Float(string="Quantity", default=1.0)
+    unit_price = fields.Float(string="Unit Price (DZD)")
+    amount = fields.Float(string="Amount (DZD)", compute='_compute_amount', store=True)
+
+    @api.depends('quantity', 'unit_price')
+    def _compute_amount(self):
+        for line in self:
+            line.amount = line.quantity * line.unit_price
