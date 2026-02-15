@@ -27,6 +27,8 @@ class ProcurementDecision(models.Model):
     decision_date = fields.Date(string="Decision Date", required=True)
     effective_date = fields.Date(string="Effective Date")
     signatory_id = fields.Many2one('res.partner', string="Signatory (President/Vice-President)")
+    awarded_bidder_id = fields.Many2one('res.partner', string="Awarded Bidder")
+    award_amount = fields.Float(string="Award Amount (DZD)")
     state = fields.Selection([
         ('draft', 'Draft'),
         ('approved', 'Approved'),
@@ -37,3 +39,15 @@ class ProcurementDecision(models.Model):
     def action_approve(self):
         """Approve the decision"""
         self.write({'state': 'approved'})
+
+    def action_sign(self):
+        """Sign the decision"""
+        self.write({'state': 'signed'})
+
+    def action_notify(self):
+        """Notify the decision"""
+        self.write({'state': 'notified'})
+
+    def action_reset_draft(self):
+        """Reset to draft"""
+        self.write({'state': 'draft'})
