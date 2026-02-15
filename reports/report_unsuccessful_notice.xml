@@ -29,9 +29,9 @@
                                 We regret to inform you that your bid for the above-referenced procurement procedure
                                 has not been selected.
                             </p>
-                            <div t-if="doc.rejection_reason">
+                            <div t-if="doc.exclusion_reason">
                                 <p><strong>Reason:</strong></p>
-                                <p t-field="doc.rejection_reason"/>
+                                <p t-field="doc.exclusion_reason"/>
                             </div>
                             <p>
                                 In accordance with applicable regulations, you have the right to submit
