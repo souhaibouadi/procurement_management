@@ -1,0 +1,170 @@
+Create a complete Odoo 17 Community Edition custom module for managing Algerian public procurement procedures (Consultations, Tenders, Competitions) compliant with Law n°23-12 of August 5, 2023, and Presidential Decree n°15-247.
+
+MODULE REQUIREMENTS:
+
+The system must automatically determine procurement method based on:
+- Estimated amount including tax (DZD)
+- Service type (Works/Supplies vs Studies/Services)
+- Structure level (Central vs Regional)
+
+The system must automatically determine the procurement method based on:
+
+CENTRAL LEVEL - WORKS & SUPPLIES:
+- Below 50,000 DZD: Direct Purchase Order / Service Order
+- 50,000 to below 1,000,000: Comparative Offer Table (COT)
+- 1,000,000 to 12,000,000: Consultation
+- 12,000,000 to 30,000,000: Tender
+- Above 30,000,000: Tender
+
+CENTRAL LEVEL - STUDIES & SERVICES:
+- Below 50,000 DZD: Direct Purchase Order / Service Order
+- 50,000 to below 500,000: Comparative Offer Table (COT)
+- 500,000 to 6,000,000: Consultation
+- 6,000,000 to 15,000,000: Tender
+- Above 15,000,000: Tender
+
+REGIONAL LEVEL - WORKS & SUPPLIES:
+- Below 50,000 DZD: Direct Purchase Order / Service Order
+- 50,000 to below 1,000,000: Comparative Offer Table (COT)
+- 1,000,000 and above: Consultation
+
+REGIONAL LEVEL - STUDIES & SERVICES:
+- Below 50,000 DZD: Direct Purchase Order / Service Order
+- 50,000 to below 500,000: Comparative Offer Table (COT)
+- 500,000 and above: Consultation
+
+CORE MODELS TO CREATE:
+
+1. procurement.procedure - Main procurement procedure tracking with complete lifecycle management including states: draft, needs_assessment, estimation, specs_drafting, specs_review, specs_correction, specs_approval, publication, specs_withdrawal, bid_submission, envelope_opening, evaluation, result, provisional_award, appeal_period, final_award, contract_approval, contract_setup, execution, provisional_acceptance, final_acceptance, closed, unsuccessful, cancelled
+
+2. procurement.committee - Procurement committees (specs review, consultation evaluation, tender evaluation, market committee) with members
+
+3. procurement.committee.session - Committee sessions with agenda items, summons, and minutes
+
+4. procurement.committee.member - Committee members with roles
+
+5. procurement.session.agenda - Session agenda items
+
+6. procurement.summons - Summons to committee members
+
+7. procurement.notice - Publication notices (tender call, candidacy call, provisional award, final award, unsuccessful, cancellation)
+
+8. procurement.publication - Publication records (press, BOMOP, website, bulletin)
+
+9. procurement.specs.withdrawal - Specifications withdrawal register
+
+10. procurement.bid.deposit - Bid deposit register
+
+11. procurement.bidder - Bidder information and tracking
+
+12. procurement.envelope.opening - Envelope opening sessions with details per bidder
+
+13. procurement.envelope.detail - Envelope opening details per bidder
+
+14. procurement.evaluation - Bid evaluation (preliminary, technical, financial) with criteria and scoring
+
+15. procurement.evaluation.criterion - Evaluation criteria with scoring formulas
+
+16. procurement.evaluation.score - Scores per bidder per criterion
+
+17. procurement.decision - Committee decisions (specs approval, contract approval, award, closure, unsuccessful declaration, cancellation)
+
+18. procurement.award - Provisional and final awards with appeal period tracking
+
+19. procurement.minutes - Official meeting minutes (PV) with attendees and signatories
+
+20. procurement.analytical.sheet - Analytical sheet for market committee award approval
+
+21. procurement.service.order - Service orders (ODS) for direct procurement
+
+22. procurement.order.letter - Order letters with line items for supplies
+
+23. procurement.order.letter.line - Order letter line items with quantity, unit price, amount
+
+24. procurement.document - Document management (specs, estimates, contracts, etc.)
+
+25. purchase.order (inherit) - Link to procurement procedures and awards
+
+26. res.partner (inherit) - Add supplier qualification fields (registration number, qualification date/expiry, fiscal ID, commerce register, CNAS, CASNOS) and computed procurement statistics
+
+REPORTS TO GENERATE (BOTH FRENCH AND ARABIC):
+
+1. report_tender_notice.xml - Tender Call Notice (Avis d'Appel d'Offres)
+2. report_tender_notice_arabic.xml - Tender Call Notice in Arabic
+3. report_provisional_award_notice.xml - Provisional Award Notice
+4. report_provisional_award_notice_arabic.xml - Provisional Award Notice in Arabic
+5. report_summons.xml - Committee Summons (Convocation)
+6. report_specs_approval_decision.xml - Specifications Approval Decision
+7. report_specs_approval_decision_arabic.xml - Specifications Approval Decision in Arabic
+8. report_award_approval_decision.xml - Award Approval Decision by Market Committee
+9. report_award_decision.xml - Award Decision
+10. report_award_decision_arabic.xml - Award Decision in Arabic
+11. report_unsuccessful_notice.xml - Unsuccessful Procedure Notice
+12. report_unsuccessful_notice_arabic.xml - Unsuccessful Procedure Notice in Arabic
+13. report_service_order.xml - Service Order (ODS)
+14. report_order_letter.xml - Order Letter (Lettre de Commande)
+15. report_analytical_sheet.xml - Analytical Sheet (Fiche Analytique)
+16. report_specs_withdrawal_register.xml - Specifications Withdrawal Register
+
+VIEWS TO CREATE:
+
+Create comprehensive form, tree, search, and kanban views for all models with proper grouping, filters, and actions. Include:
+- procurement_procedure_views.xml with complete lifecycle buttons
+- procurement_committee_views.xml
+- procurement_session_views.xml
+- procurement_summons_views.xml
+- procurement_notice_views.xml
+- procurement_publication_views.xml
+- procurement_specs_withdrawal_views.xml
+- procurement_bid_deposit_views.xml
+- procurement_bidder_views.xml
+- procurement_envelope_opening_views.xml
+- procurement_evaluation_views.xml
+- procurement_decision_views.xml
+- procurement_award_views.xml
+- procurement_minutes_views.xml
+- procurement_analytical_sheet_views.xml
+- procurement_service_order_views.xml
+- procurement_order_letter_views.xml
+- procurement_document_views.xml
+- purchase_order_inherit_views.xml
+- menu_views.xml with complete menu structure
+
+WIZARDS:
+
+1. wizard_generate_summons - Generate summons for committee sessions
+2. wizard_score_evaluation - Score bidder evaluations with criteria
+
+SECURITY:
+
+- security_groups.xml: procurement_user, procurement_manager groups
+- ir.model.access.csv: Complete access rights for all models
+- record_rules.xml: Multi-company record rules
+
+DATA FILES:
+
+- sequence_data.xml: Sequences for all document types
+- procurement_data.xml: Default data (committees, document types, etc.)
+
+DEPENDENCIES:
+
+- base
+- purchase
+- contacts
+- mail
+
+All models must inherit mail.thread and mail.activity.mixin for tracking and communication.
+
+Reports must use QWeb templates with proper formatting for official Algerian administrative documents, including bilingual support (French/Arabic).
+
+Include computed fields for:
+- VAT calculations
+- Procedure type determination
+- Appeal period end dates
+- Score totals
+- Ranking calculations
+- Document counts
+
+Include proper ondelete constraints, domain restrictions, and readonly states based on procedure lifecycle.
+
+Generate complete, production-ready code with proper Python naming conventions, comprehensive docstrings, and all necessary imports.
